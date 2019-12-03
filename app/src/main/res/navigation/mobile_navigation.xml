@@ -10,34 +10,46 @@
         android:name="com.boltztrade.app.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_watchlist"
+        android:name="com.boltztrade.app.ui.watchlist.WatchlistFragment"
+        android:label="@string/menu_watchlist"
+        tools:layout="@layout/watchlist_fragment" />
+    <fragment
+        android:id="@+id/nav_articles"
+        android:name="com.boltztrade.app.ui.articles.ArticleFragment"
+        android:label="@string/menu_article"
+        tools:layout="@layout/article_fragment" />
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="com.boltztrade.app.ui.news.NewsFragment"
+        android:label="@string/menu_news"
+        tools:layout="@layout/news_fragment" />
+    <fragment
+        android:id="@+id/nav_strategies"
+        android:name="com.boltztrade.app.ui.strategies.StrategiesFragment"
+        android:label="@string/menu_strategies"
+        tools:layout="@layout/strategies_fragment" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.boltztrade.app.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/profile_fragment" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.boltztrade.app.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_settings"
+        android:name="com.boltztrade.app.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/settings_fragment" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.boltztrade.app.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
+        android:id="@+id/nav_billings"
+        android:name="com.boltztrade.app.ui.billings.BillingFragment"
+        android:label="@string/menu_billings"
+        tools:layout="@layout/billing_fragment" />
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.boltztrade.app.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_help"
+        android:name="com.boltztrade.app.ui.help.HelpFragment"
+        android:label="@string/menu_help"
+        tools:layout="@layout/help_fragment" />
 
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="com.boltztrade.app.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.boltztrade.app.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
 </navigation>
