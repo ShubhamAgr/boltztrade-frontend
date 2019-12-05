@@ -5,4 +5,12 @@
     <color name="colorAccent">#FFF</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="lightCoral">#f5787c</color>
+    <color name="indianRed">#e5595e</color>
+    <color name="riffleGreen">#444540</color>
+    <color name="lightRiffleGreen">#66444540</color>
+    <color name="alabaster">#F0F1E9</color>
+    <color name="spanishGray">#929292</color>
+    <color name="spanishPink">#f8babc</color>
+    <color name="charcoal">#F0F1E9</color>
 </resources>
