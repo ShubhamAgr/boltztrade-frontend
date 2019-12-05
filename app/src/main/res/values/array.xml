@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="indiactor_list">
+        <item>MACD</item>
+        <item>RSI</item>
+        <item>Bollinger Band</item>
+        <item>Alligator</item>
+    </string-array>
+
+    <string-array name="comparison_operator_list">
+        <item>&lt;</item>
+        <item>&gt;</item>
+        <item>&lt;=</item>
+        <item>&gt;=</item>
+        <item>==</item>
+    </string-array>
+</resources>

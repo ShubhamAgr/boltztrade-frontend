@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.boltztrade.app.R
+import com.boltztrade.app.apis.BoltztradeRetrofit
 
 class ArticleFragment : Fragment() {
 
@@ -21,7 +22,8 @@ class ArticleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.article_fragment, container, false)
+        val view =  inflater.inflate(R.layout.article_fragment, container, false)
+        return  view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
