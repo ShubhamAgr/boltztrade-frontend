@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".ui.strategies.StrategyActivity">
 
     <FrameLayout
@@ -23,10 +24,10 @@
         android:id="@+id/strategy_fragment_switch_button"
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/chips"
         android:text="Continue"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

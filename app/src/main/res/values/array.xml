@@ -15,4 +15,22 @@
         <item>&gt;=</item>
         <item>==</item>
     </string-array>
+
+    <string-array name="age_range">
+        <item>&lt;20</item>
+        <item>20 - 25</item>
+        <item>25 - 30</item>
+        <item>30 - 40</item>
+        <item>40 - 50</item>
+        <item>&gt;50</item>
+    </string-array>
+
+    <string-array name="trading_exp">
+        <item>&lt;1 yr</item>
+        <item>1 - 2 yr</item>
+        <item>2 - 5 yr</item>
+        <item>5 - 10 yr</item>
+        <item>10 - 20</item>
+        <item>&gt;20</item>
+    </string-array>
 </resources>

@@ -27,7 +27,7 @@ class StrategyActivity : AppCompatActivity() {
                 is CreateStrategyPart2->{
                     currentFragment = CreateStrategyPart3.newInstance("","")
                     switchFragment(currentFragment,"createStrategyPart3")
-                    fragmentSwitcherButton.text = "Submit"
+                    fragmentSwitcherButton.text = "Save & Backtest"
 
                 }
                 is CreateStrategyPart3->{
@@ -42,7 +42,6 @@ class StrategyActivity : AppCompatActivity() {
         try {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.strategy_fragment_container, fragment)
-            transaction.addToBackStack(null)
             transaction.commit()
 
         }catch (e:Exception){

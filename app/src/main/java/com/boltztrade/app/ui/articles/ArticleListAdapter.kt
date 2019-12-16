@@ -12,7 +12,7 @@ class ArticleListAdapter() :
     .Adapter<ArticleListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardview = LayoutInflater.from(parent?.context)
-            .inflate(R.layout.fragment_home, parent, false) as CardView
+            .inflate(R.layout.card_articles, parent, false) as CardView
 
         return ViewHolder(cardview)
     }

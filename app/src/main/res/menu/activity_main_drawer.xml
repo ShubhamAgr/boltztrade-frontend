@@ -37,10 +37,10 @@
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="@string/menu_settings" />
-            <item
-                android:id="@+id/nav_billings"
-                android:icon="@drawable/ic_credit_card_black_24dp"
-                android:title="@string/menu_billings" />
+<!--            <item-->
+<!--                android:id="@+id/nav_billings"-->
+<!--                android:icon="@drawable/ic_credit_card_black_24dp"-->
+<!--                android:title="@string/menu_billings" />-->
             <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/ic_help_black_24dp"

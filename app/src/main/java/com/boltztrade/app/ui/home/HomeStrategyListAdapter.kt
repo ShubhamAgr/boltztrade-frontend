@@ -1,4 +1,4 @@
-package com.boltztrade.app.ui.watchlist
+package com.boltztrade.app.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,18 +7,18 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.R
 
-class WatchListAdapter :
+class HomeStrategyListAdapter :
     RecyclerView
-    .Adapter<WatchListAdapter.ViewHolder>() {
+    .Adapter<HomeStrategyListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardview = LayoutInflater.from(parent?.context)
-            .inflate(R.layout.card_watchlist, parent, false) as CardView
+            .inflate(R.layout.card_strategies, parent, false) as CardView
 
         return ViewHolder(cardview)
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return 5
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
