@@ -1,12 +1,8 @@
 package com.boltztrade.app.apis
 
-import com.boltztrade.app.model.GoogleLoginResponse
-import com.boltztrade.app.model.Tokens
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.boltztrade.app.model.*
 import io.reactivex.Observable
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiService {
@@ -23,4 +19,18 @@ interface ApiService {
 
     @POST("/onBoarding/loginWithGmail")
     fun loginWithGmail(@Body tokens: Tokens):Observable<GoogleLoginResponse>
+
+    @GET("/news/read")
+    fun getNews(@Header("Authorization")authorization:String):Observable<News>
+
+    @GET("/articles/read")
+    fun getArticles(@Header("Authorization")authorization:String):Observable<MutableList<Articles>>
+
+    @POST("/strategies/getUserStrategies")
+    fun getUserStrategies(@Header("Authorization")authorization:String,@Body username:Username):Observable<MutableList<StrategyModel>>
+
+    @POST("/playground/getInstrumentList")
+    fun getInstrumentList(@Header("Authorization")authorization:String,@Body instrumentRegex:InstrumentRegex):Observable<MutableList<Instrument>>
+
+
 }

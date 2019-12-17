@@ -231,6 +231,9 @@ class CreateStrategyPart2 : Fragment() {
         dialog.show()
     }
 
+    fun setPage(){
+        MyStrategy.setMEntryCondition(strategylist)
+    }
     fun setIndicatorProperties(indicator:String,dialogView:View):MutableMap<Any?,Any?>{
 
         return mutableMapOf()

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 
 import com.boltztrade.app.R
 
@@ -26,16 +28,26 @@ class CreateStrategyPart3 : Fragment() {
         }
     }
 
+    private lateinit var profitPercentEditText:EditText
+    private lateinit var lossPercentEditText: EditText
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_create_strategy_part3, container, false)
+        profitPercentEditText = view.findViewById(R.id.target_profit_edittext)
+        lossPercentEditText = view.findViewById(R.id.stop_loss_edittext)
+
         return view
     }
 
 
+    fun setPage(){
+        MyStrategy.setMTargetProfitPercent(profitPercentEditText?.text.toString().toFloat())
+        MyStrategy.setMTargetLossPercent(lossPercentEditText.text.toString().toFloat())
+    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

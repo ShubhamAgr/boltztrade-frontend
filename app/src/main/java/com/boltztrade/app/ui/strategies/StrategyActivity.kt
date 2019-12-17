@@ -2,14 +2,23 @@ package com.boltztrade.app.ui.strategies
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.boltztrade.app.R
+import com.boltztrade.app.model.Instrument
+import com.boltztrade.app.model.Strategy
+import com.boltztrade.app.model.StrategyModel
+import java.time.Instant
+import java.util.*
 
 class StrategyActivity : AppCompatActivity() {
 
-    lateinit var currentFragment: Fragment
-    lateinit var fragmentSwitcherButton:Button
+    private lateinit var currentFragment: Fragment
+    private lateinit var fragmentSwitcherButton:Button
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +30,26 @@ class StrategyActivity : AppCompatActivity() {
         fragmentSwitcherButton.setOnClickListener {
             when(currentFragment){
                 is CreateStrategyPart1->{
+                    (currentFragment as CreateStrategyPart1).setPage()
                     currentFragment = CreateStrategyPart2.newInstance("","")
                     switchFragment(currentFragment,"createStrategyPart2")
                 }
                 is CreateStrategyPart2->{
+                    (currentFragment as CreateStrategyPart2).setPage()
                     currentFragment = CreateStrategyPart3.newInstance("","")
                     switchFragment(currentFragment,"createStrategyPart3")
                     fragmentSwitcherButton.text = "Save & Backtest"
 
                 }
                 is CreateStrategyPart3->{
-                    //call submit api...
+                    (currentFragment as CreateStrategyPart3).setPage()
+                    //create Strategy And submit api
+                    try {
+                       Log.d("create strategy","${MyStrategy.createStrategy().toString()}")
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                 }
             }
         }
