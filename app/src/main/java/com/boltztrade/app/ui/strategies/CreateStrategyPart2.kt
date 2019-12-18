@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +25,14 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import android.widget.LinearLayout
+
+
+
+
+
+
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -174,16 +185,27 @@ class CreateStrategyPart2 : Fragment() {
 
         val dialogView = when(indicator){
             "MACD" ->inflater.inflate(R.layout.indicator_macd_layout,null)
+            "Bollinger Band"->inflater.inflate(R.layout.indicator_bollinger,null)
+            "RSI"->inflater.inflate(R.layout.indicator_rsi,null)
+            "Alligator"->inflater.inflate(R.layout.indicator_alligator,null)
             else->inflater.inflate(R.layout.indicator_macd_layout,null)
+        }
+
+        if(indicatorPosition ==0){
+            setIndicatorDialogValues(indicator,dialogView,strategylist[position].firstIndicator.properties)
+        }else{
+            setIndicatorDialogValues(indicator,dialogView,strategylist[position].secondIndicator.properties)
         }
 
         val doneButton = dialogView.findViewById(R.id.done) as Button
 
         doneButton.setOnClickListener {
             if(indicatorPosition ==0){
-                strategylist[position].firstIndicator = Indicator("MACD", mutableMapOf())
+                val properties = setIndicatorProperties(indicator,dialogView)
+                strategylist[position].firstIndicator = Indicator(indicator, properties)
             }else{
-                strategylist[position].secondIndicator = Indicator("MACD", mutableMapOf())
+                val properties = setIndicatorProperties(indicator,dialogView)
+                strategylist[position].secondIndicator = Indicator(indicator, properties)
             }
             dialog?.dismiss()
         }
@@ -195,6 +217,13 @@ class CreateStrategyPart2 : Fragment() {
         dialog.show()
     }
 
+    /**
+     * <item>RSI</item>
+    <item>Bollinger Band</item>
+    <item>Alligator</item>
+     * */
+    private lateinit var indicator1:Indicator
+    private lateinit var indicator2:Indicator
     fun showIndicatorPropertiesDialog(indicator:String){
         var dialog:AlertDialog? = null
         val dialogBuilder = AlertDialog.Builder(view?.context)
@@ -202,7 +231,46 @@ class CreateStrategyPart2 : Fragment() {
 
         val dialogView = when(indicator){
            "MACD" ->inflater.inflate(R.layout.indicator_macd_layout,null)
+            "Bollinger Band"->inflater.inflate(R.layout.indicator_bollinger,null)
+            "RSI"->inflater.inflate(R.layout.indicator_rsi,null)
+            "Alligator"->inflater.inflate(R.layout.indicator_alligator,null)
             else->inflater.inflate(R.layout.indicator_macd_layout,null)
+        }
+
+        if(false){
+            val s = arrayOf(
+                "India ",
+                "Arica",
+                "India ",
+                "Arica",
+                "India ",
+                "Arica",
+                "India ",
+                "Arica",
+                "India ",
+                "Arica"
+            )
+
+            val arrayAdapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, s)
+            val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
+            val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
+
+
+            fieldSpinner.setLayoutParams(
+                LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            )
+            fieldSpinner.setAdapter(arrayAdapter)
+
+            maSpinner.setLayoutParams(
+                LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            )
+            maSpinner.setAdapter(arrayAdapter)
         }
 
         val doneButton = dialogView.findViewById(R.id.done) as Button
@@ -211,12 +279,14 @@ class CreateStrategyPart2 : Fragment() {
             if(showDialogCounter==0){
                 showDialogCounter++
                 val properties = setIndicatorProperties(indicator,dialogView)
+                indicator1 = Indicator(indicator,properties)
                 showDialog()
                 dialog?.dismiss()
             }else{
                 val properties = setIndicatorProperties(indicator,dialogView)
-                val indicator1 = Indicator("", mutableMapOf())
-                val indicator2 = Indicator("", mutableMapOf())
+
+                indicator2 = Indicator(indicator,properties)
+
                 strategylist.add(Strategy(indicator1,indicator2,"<","and"))
                 viewAdapter.notifyDataSetChanged()
                 showDialogCounter = 0
@@ -232,11 +302,134 @@ class CreateStrategyPart2 : Fragment() {
     }
 
     fun setPage(){
-        MyStrategy.setMEntryCondition(strategylist)
+        try {
+            MyStrategy.setMEntryCondition(strategylist)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
-    fun setIndicatorProperties(indicator:String,dialogView:View):MutableMap<Any?,Any?>{
 
-        return mutableMapOf()
+    fun setIndicatorDialogValues(indicator:String,dialogView:View,propertiesMap:MutableMap<Any?,Any?>){
+        when(indicator){
+
+            "MACD" ->{
+                dialogView.findViewById<EditText>(R.id.fast_ma_edittext).setText(propertiesMap["fast_ma_period"].toString())
+                dialogView.findViewById<EditText>(R.id.slow_ma_edittext).setText(propertiesMap["slow_ma_period"].toString())
+                dialogView.findViewById<EditText>(R.id.signal_period_edittext).setText(propertiesMap["signal_period"].toString())
+            }
+
+            "Bollinger Band"->{
+                try {
+//                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
+//                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
+
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
+
+            "RSI"->{
+                dialogView.findViewById<EditText>(R.id.period_edittext).setText(propertiesMap["period"].toString())
+            }
+
+            "Alligator"->{
+                dialogView.findViewById<EditText>(R.id.jaw_period_edittext).setText(propertiesMap["jaw_period"].toString())
+                dialogView.findViewById<EditText>(R.id.jaw_offset_edittext).setText(propertiesMap["jaw_offset"].toString())
+                dialogView.findViewById<EditText>(R.id.teeth_period_edittextt).setText(propertiesMap["teeth_period"].toString())
+                dialogView.findViewById<EditText>(R.id.teeth_offset_edittext).setText(propertiesMap["teeth_offset"].toString())
+                dialogView.findViewById<EditText>(R.id.lips_period_edittext).setText(propertiesMap["lips_period"].toString())
+                dialogView.findViewById<EditText>(R.id.lips_offset_edittext).setText(propertiesMap["lips_offset"].toString())
+
+            }
+
+            else->{Log.d(LOG_TAG,"no indicator for set properties")}
+        }
+    }
+
+    fun setIndicatorProperties(indicator:String,dialogView:View):MutableMap<Any?,Any?>{
+        val propertiesMap :MutableMap<Any?,Any?> = mutableMapOf()
+        when(indicator){
+            "MACD" ->{
+                val fastMatext =   dialogView.findViewById<EditText>(R.id.fast_ma_edittext).text.toString().toInt()
+                val slowMatext = dialogView.findViewById<EditText>(R.id.slow_ma_edittext).text.toString().toInt()
+                val signalPeriodText = dialogView.findViewById<EditText>(R.id.signal_period_edittext).text.toString().toInt()
+
+                propertiesMap["fast_ma_period"] = fastMatext
+                propertiesMap["slow_ma_period"] = slowMatext
+                propertiesMap["signal_period"] = signalPeriodText
+            }
+
+            "Bollinger Band"->{
+                try {
+
+                    val s = arrayOf(
+                        "India ",
+                        "Arica",
+                        "India ",
+                        "Arica",
+                        "India ",
+                        "Arica",
+                        "India ",
+                        "Arica",
+                        "India ",
+                        "Arica"
+                    )
+
+                    val arrayAdapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, s)
+                    val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
+                    val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
+
+
+                    fieldSpinner.setLayoutParams(
+                        LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                    )
+                    fieldSpinner.setAdapter(arrayAdapter)
+
+                    maSpinner.setLayoutParams(
+                        LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                    )
+                    maSpinner.setAdapter(arrayAdapter)
+
+                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
+                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
+
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
+
+            "RSI"->{
+                val period = dialogView.findViewById<EditText>(R.id.period_edittext).text.toString().toInt()
+
+                propertiesMap["period"] = period
+            }
+
+            "Alligator"->{
+                val jawPeriodText = dialogView.findViewById<EditText>(R.id.jaw_period_edittext).text.toString().toInt()
+                val jawoffsetText = dialogView.findViewById<EditText>(R.id.jaw_offset_edittext).text.toString().toInt()
+                val teethPeriodText = dialogView.findViewById<EditText>(R.id.teeth_period_edittextt).text.toString().toInt()
+                val teethPeriodOffsetText = dialogView.findViewById<EditText>(R.id.teeth_offset_edittext).text.toString().toInt()
+                val lipsPeriodText = dialogView.findViewById<EditText>(R.id.lips_period_edittext).text.toString().toInt()
+                val lipsPeriodOffsetText = dialogView.findViewById<EditText>(R.id.lips_offset_edittext).text.toString().toInt()
+
+                propertiesMap["jaw_period"] = jawPeriodText
+                propertiesMap["jaw_offset"] = jawoffsetText
+                propertiesMap["teeth_period"] = teethPeriodText
+                propertiesMap["teeth_offset"] = teethPeriodOffsetText
+                propertiesMap["lips_period"] = lipsPeriodText
+                propertiesMap["lips_offset"] = lipsPeriodOffsetText
+            }
+
+            else->{Log.d(LOG_TAG,"no indicator for set properties")}
+        }
+
+        return propertiesMap
     }
 
     companion object {

@@ -14,6 +14,8 @@ import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
+import com.boltztrade.app.model.Articles
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -28,6 +30,7 @@ class ArticleFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
+    private val articleList:MutableList<Articles> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,12 @@ class ArticleFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.article_fragment, container, false)
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = ArticleListAdapter()
+        viewAdapter = ArticleListAdapter(articleList,object :RecyclerviewSelectedPositionCallback{
+            override fun itemSelected(position: Int) {
+                Log.d(LOG_TAG,"article clicked $position")
+            }
+
+        })
         recyclerView = (view.findViewById(R.id.article_recycler_view) as RecyclerView).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -47,6 +55,9 @@ class ArticleFragment : Fragment() {
             SharedPrefKeys.boltztradeToken,"")!!}").
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
+            articleList.clear()
+            articleList.addAll(it)
+            viewAdapter.notifyDataSetChanged()
         },{
             it.printStackTrace()
         },{

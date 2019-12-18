@@ -45,8 +45,12 @@ class CreateStrategyPart3 : Fragment() {
 
 
     fun setPage(){
-        MyStrategy.setMTargetProfitPercent(profitPercentEditText?.text.toString().toFloat())
-        MyStrategy.setMTargetLossPercent(lossPercentEditText.text.toString().toFloat())
+        try {
+            MyStrategy.setMTargetProfitPercent(profitPercentEditText?.text.toString().toFloat())
+            MyStrategy.setMTargetLossPercent(lossPercentEditText.text.toString().toFloat())
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
     companion object {
         @JvmStatic

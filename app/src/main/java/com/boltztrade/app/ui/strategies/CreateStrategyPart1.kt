@@ -119,9 +119,13 @@ class CreateStrategyPart1 : Fragment() {
     }
 
     fun setPage(){
-        MyStrategy.setMSelectedInstrument(selectedInstrument)
-        MyStrategy.setMAlgoName(strategyNameEditText.text.toString())
-        MyStrategy.setMQuantity(strategyQuantityEditText.text.toString().toDouble())
+        try{
+            MyStrategy.setMSelectedInstrument(selectedInstrument)
+            MyStrategy.setMAlgoName(strategyNameEditText.text.toString())
+            MyStrategy.setMQuantity(strategyQuantityEditText.text.toString().toDouble())
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     fun visibility(boolean: Boolean){

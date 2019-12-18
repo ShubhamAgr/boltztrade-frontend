@@ -39,10 +39,10 @@ object MyStrategy {
     }
 
     fun createStrategy():StrategyModel{
-        val strategy = StrategyModel(algoName,instrument = selectedInstrument.name,tradingSymbol = selectedInstrument.tradingsymbol,
+        val strategy = StrategyModel(algoName = algoName,instrument = selectedInstrument.name,tradingSymbol = selectedInstrument.tradingsymbol,
             exchange = selectedInstrument.exchange,author = "shubham",publisher = "shubham",quantity = quantity,
             candleInterval ="1 Hour",entry = entryStrategy,position = "Buy",stopLossPercent = stopLossPercent,
-            targetProfitPercent = targetProfitPercent,createdOn = Calendar.getInstance().time
+            targetProfitPercent = targetProfitPercent,createdOn = null
         )
         return strategy
     }

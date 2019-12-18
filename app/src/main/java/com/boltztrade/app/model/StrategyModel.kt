@@ -2,7 +2,7 @@ package com.boltztrade.app.model
 
 import java.util.*
 
-data class StrategyModel(var algoName:String,var instrument:String?,val tradingSymbol:String?, var exchange:String?="nse",
+data class StrategyModel(var _id:String? = "",var algoName:String,var instrument:String?,val tradingSymbol:String?, var exchange:String?="nse",
                          var author:String,var status:Int = StrategyStatus.DRAFT.ordinal,var publisher:String?,
                          var position:String?,var quantity:Double?,var candleInterval:String?,
                          var entry:MutableList<Strategy> = mutableListOf(),

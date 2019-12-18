@@ -14,6 +14,8 @@ import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
+import com.boltztrade.app.model.NewsArticles
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -28,13 +30,20 @@ class NewsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
+
+    val newsList :MutableList<NewsArticles> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.news_fragment, container, false)
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = NewsListAdapter()
+        viewAdapter = NewsListAdapter(newsList,object :RecyclerviewSelectedPositionCallback{
+            override fun itemSelected(position: Int) {
+                Log.d(LOG_TAG,"news selected , $position")
+            }
+
+        })
         recyclerView = (view.findViewById(R.id.news_recycler_view) as RecyclerView).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -44,6 +53,10 @@ class NewsFragment : Fragment() {
         val disp = BoltztradeRetrofit.getInstance().getNews("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.boltztradeToken,"")!!}").
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
+            newsList.clear()
+            newsList.addAll(it.articles)
+            viewAdapter.notifyDataSetChanged()
+
         },{
             it.printStackTrace()
         },{

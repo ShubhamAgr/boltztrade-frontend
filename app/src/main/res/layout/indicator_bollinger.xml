@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/opensans_regular"
-        android:text="MACD"
+        android:text="Bollinger Band"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,31 +22,34 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Fast MA Period:"
         android:fontFamily="@font/montserrat_regular"
-        app:layout_constraintBaseline_toBaselineOf="@+id/fast_ma_edittext"
-        app:layout_constraintEnd_toStartOf="@+id/fast_ma_edittext" />
+        android:text="Field:"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/field_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/field_spinner"
+        app:layout_constraintTop_toTopOf="@+id/field_spinner" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Slow MA Period:"
+        android:textSize="11sp"
+        android:text="Period:"
         android:fontFamily="@font/montserrat_regular"
-        app:layout_constraintBaseline_toBaselineOf="@+id/slow_ma_edittext"
-        app:layout_constraintEnd_toStartOf="@+id/slow_ma_edittext" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/period_edittext"
+        app:layout_constraintEnd_toStartOf="@+id/period_edittext" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Signal Period:"
+        android:textSize="11sp"
+        android:text="Standard deviation:"
         android:fontFamily="@font/montserrat_regular"
-        app:layout_constraintBaseline_toBaselineOf="@+id/signal_period_edittext"
-        app:layout_constraintEnd_toStartOf="@+id/signal_period_edittext" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/standard_deviation_edittext"
+        app:layout_constraintEnd_toStartOf="@+id/standard_deviation_edittext" />
 
     <Button
         android:id="@+id/done"
@@ -55,17 +58,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/riffle_green"
         android:text="Done"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signal_period_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/ma_type_spinner" />
 
-    <EditText
-        android:id="@+id/fast_ma_edittext"
+    <Spinner
+        android:id="@+id/field_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -73,39 +77,64 @@
         android:gravity="center"
         android:background="@drawable/border_layout"
         android:ems="10"
-        android:text="12"
+        android:spinnerMode="dialog"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/slow_ma_edittext"
+        android:id="@+id/period_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/border_layout"
         android:ems="10"
+        android:text="20"
         android:gravity="center"
-        android:text="26"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/fast_ma_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/field_spinner" />
 
     <EditText
-        android:id="@+id/signal_period_edittext"
+        android:id="@+id/standard_deviation_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="9"
         android:background="@drawable/border_layout"
-        android:gravity="center"
         android:ems="10"
+        android:text="2"
+        android:gravity="center"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/slow_ma_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/period_edittext" />
+
+    <Spinner
+        android:id="@+id/ma_type_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/border_layout"
+        android:ems="10"
+        android:gravity="center"
+        android:spinnerMode="dialog"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/standard_deviation_edittext" />
+    <TextView
+        android:id="@+id/spinner2_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="MA Type:"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ma_type_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/ma_type_spinner"
+        app:layout_constraintTop_toTopOf="@+id/ma_type_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

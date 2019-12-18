@@ -32,5 +32,11 @@ interface ApiService {
     @POST("/playground/getInstrumentList")
     fun getInstrumentList(@Header("Authorization")authorization:String,@Body instrumentRegex:InstrumentRegex):Observable<MutableList<Instrument>>
 
+    @POST("/strategies/create")
+    fun createStrategies(@Header("Authorization")authorization:String,@Body strategy:StrategyModel):Observable<StrategyModel>
+
+    @POST("/strategies/addAuthor")
+    fun addStrategyAuthor(@Header("Authorization")authorization:String,@Body addStrategyAuthor: Strategies.AddStrategyAuthor):Observable<StrategyModel>
+
 
 }
