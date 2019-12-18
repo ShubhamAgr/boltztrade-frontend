@@ -1,5 +1,6 @@
 package com.boltztrade.app.ui.articles
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.BoltztradeSingleton
+import com.boltztrade.app.BoltztradeWebViewActivity
 
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
@@ -41,6 +43,12 @@ class ArticleFragment : Fragment() {
         viewAdapter = ArticleListAdapter(articleList,object :RecyclerviewSelectedPositionCallback{
             override fun itemSelected(position: Int) {
                 Log.d(LOG_TAG,"article clicked $position")
+                if(articleList[position].htmlContent != ""){
+                   activity?.startActivity(Intent(activity!!,BoltztradeWebViewActivity::class.java).apply {
+                       putExtra("isHtmlText",true)
+                       putExtra("htmlText",articleList[position].htmlContent)
+                   })
+                }
             }
 
         })

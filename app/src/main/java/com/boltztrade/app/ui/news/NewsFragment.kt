@@ -1,5 +1,6 @@
 package com.boltztrade.app.ui.news
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.BoltztradeSingleton
+import com.boltztrade.app.BoltztradeWebViewActivity
 
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
@@ -41,6 +43,10 @@ class NewsFragment : Fragment() {
         viewAdapter = NewsListAdapter(newsList,object :RecyclerviewSelectedPositionCallback{
             override fun itemSelected(position: Int) {
                 Log.d(LOG_TAG,"news selected , $position")
+                activity?.startActivity(Intent(activity!!, BoltztradeWebViewActivity::class.java).apply {
+                    putExtra("isHtmlText",false)
+                    putExtra("url",newsList[position].url)
+                })
             }
 
         })
