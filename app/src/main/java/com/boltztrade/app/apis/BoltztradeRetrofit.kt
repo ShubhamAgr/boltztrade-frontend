@@ -10,7 +10,7 @@ object BoltztradeRetrofit {
             RxJava2CallAdapterFactory.create())
         .addConverterFactory(
             GsonConverterFactory.create())
-        .baseUrl("http://192.168.0.3:8080")
+        .baseUrl("http://192.168.0.4:8080")
         .build()
     private var instance = mRetrofit.create(ApiService::class.java)
 
