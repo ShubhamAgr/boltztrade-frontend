@@ -9,6 +9,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import android.content.Intent
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
 import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.MainActivity
 import com.boltztrade.app.SharedPrefKeys
@@ -18,6 +20,7 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.Scope
+import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -29,7 +32,10 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        supportActionBar?.hide()
         BoltztradeSingleton.initializeSharedPreferences(this)
+        BoltztradeSingleton.initializeFirebase()
+        subscribeToTopic()
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener { signIn() }
@@ -82,5 +88,29 @@ class SignInActivity : AppCompatActivity() {
            Log.e(LOG_TAG,"login failed...")
         }
 
+    }
+
+
+    fun subscribeToTopic(){
+        FirebaseMessaging.getInstance().subscribeToTopic("highScores")
+            .addOnCompleteListener { task ->
+                var msg = "Subscribed to topic"
+                if (!task.isSuccessful) {
+                    msg = "Subscription Failed"
+                }
+                Log.d("subscribed","$msg")
+            }
+    }
+
+    fun UnSubscribeToTopic(){
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("weather")
+            .addOnCompleteListener { task ->
+                var msg = "UnSubscribed to topic"
+                if (!task.isSuccessful) {
+                    msg = "UnSubscription Failed"
+                }
+
+                Log.d("unsubscribed","$msg")
+            }
     }
 }

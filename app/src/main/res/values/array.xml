@@ -33,4 +33,17 @@
         <item>10 - 20</item>
         <item>&gt;20</item>
     </string-array>
+
+
+    <string-array name="bollinger_field">
+        <item>Open</item>
+        <item>Close</item>
+        <item>High</item>
+        <item>Low</item>
+    </string-array>
+    <string-array name="bollinger_ma_type">
+        <item>Simple</item>
+        <item>Exponential</item>
+        <item>Triangular</item>
+    </string-array>
 </resources>

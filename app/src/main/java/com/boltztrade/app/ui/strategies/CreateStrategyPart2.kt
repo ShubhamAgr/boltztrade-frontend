@@ -50,6 +50,8 @@ class CreateStrategyPart2 : Fragment() {
 
     private val strategylist:MutableList<Strategy> = mutableListOf()
     private val operatorList:MutableList<String> = mutableListOf("<",">","<=",">=","==")
+    private val optionList:MutableMap<String,MutableList<String>> = mutableMapOf()
+
     private lateinit var createStrategyFAB :FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +68,13 @@ class CreateStrategyPart2 : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_create_strategy_part2, container, false)
         createStrategyFAB = view.findViewById(R.id.createStrategyFab)
+
         createStrategyFAB.setOnClickListener {
             showDialog()
         }
+
         viewManager = LinearLayoutManager(activity)
+
         viewAdapter = CreateStrategyListAdapter(strategylist,object :StrategyCardTouchCallback{
             override fun onSelectFirstIndicator(position: Int) {
                 Log.d(LOG_TAG,"selected first indicator $position")
@@ -93,6 +98,7 @@ class CreateStrategyPart2 : Fragment() {
             }
 
         })
+
         recyclerView = (view.findViewById(R.id.create_strategy_recycler_view) as RecyclerView).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -101,8 +107,6 @@ class CreateStrategyPart2 : Fragment() {
         }
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-
-
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 Log.d(LOG_TAG, "onMoveCalled")
@@ -238,39 +242,10 @@ class CreateStrategyPart2 : Fragment() {
         }
 
         if(false){
-            val s = arrayOf(
-                "India ",
-                "Arica",
-                "India ",
-                "Arica",
-                "India ",
-                "Arica",
-                "India ",
-                "Arica",
-                "India ",
-                "Arica"
-            )
 
-            val arrayAdapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, s)
             val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
             val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
 
-
-            fieldSpinner.setLayoutParams(
-                LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            )
-            fieldSpinner.setAdapter(arrayAdapter)
-
-            maSpinner.setLayoutParams(
-                LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            )
-            maSpinner.setAdapter(arrayAdapter)
         }
 
         val doneButton = dialogView.findViewById(R.id.done) as Button
@@ -320,8 +295,12 @@ class CreateStrategyPart2 : Fragment() {
 
             "Bollinger Band"->{
                 try {
-//                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
-//                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
+
+                    val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
+                    val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
+
+                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
+                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
 
                 }catch (e:Exception){
                     e.printStackTrace()
@@ -362,39 +341,12 @@ class CreateStrategyPart2 : Fragment() {
             "Bollinger Band"->{
                 try {
 
-                    val s = arrayOf(
-                        "India ",
-                        "Arica",
-                        "India ",
-                        "Arica",
-                        "India ",
-                        "Arica",
-                        "India ",
-                        "Arica",
-                        "India ",
-                        "Arica"
-                    )
-
-                    val arrayAdapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, s)
                     val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
                     val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
 
 
-                    fieldSpinner.setLayoutParams(
-                        LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        )
-                    )
-                    fieldSpinner.setAdapter(arrayAdapter)
 
-                    maSpinner.setLayoutParams(
-                        LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        )
-                    )
-                    maSpinner.setAdapter(arrayAdapter)
+
 
                     fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
                     maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }

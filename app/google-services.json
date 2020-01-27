@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "910071125271",
+    "firebase_url": "https://bt-test-1-1576516206815.firebaseio.com",
+    "project_id": "bt-test-1-1576516206815",
+    "storage_bucket": "bt-test-1-1576516206815.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910071125271:android:044b1c5806ee851fff5352",
+        "android_client_info": {
+          "package_name": "com.boltztrade.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910071125271-69d49e8trblb0q9r9vag03c4uoggnpg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boltztrade.app",
+            "certificate_hash": "b2c877e5d60e002979a3f5909f0ccf271a3614a7"
+          }
+        },
+        {
+          "client_id": "910071125271-62vfc1hhe51vi68i8192iclj2c7pf162.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnZfntHUaMcSCLU2-MUkOTUCD_FWRWOzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910071125271-62vfc1hhe51vi68i8192iclj2c7pf162.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

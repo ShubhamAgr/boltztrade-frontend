@@ -38,7 +38,7 @@ class ProfileFragment : Fragment() {
             ArrayAdapter.createFromResource(
                 activity!!,
                 R.array.age_range,
-                android.R.layout.simple_spinner_item
+                R.layout.profile_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 ageExpSpinner.adapter = adapter
@@ -48,7 +48,7 @@ class ProfileFragment : Fragment() {
             ArrayAdapter.createFromResource(
                 activity!!,
                 R.array.trading_exp,
-                android.R.layout.simple_spinner_item
+                R.layout.profile_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 tradingExpSpinner.adapter = adapter
