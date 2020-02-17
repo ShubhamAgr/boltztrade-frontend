@@ -1,5 +1,6 @@
 package com.boltztrade.app.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.R
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
+import com.boltztrade.app.callbacks.StrategyOpsCallback
 import com.boltztrade.app.model.StrategyModel
 
-class HomeStrategyListAdapter(val strategyList:MutableList<StrategyModel>, val recyclerviewSelectedPositionCallback: RecyclerviewSelectedPositionCallback) :
+class HomeStrategyListAdapter(val strategyList:MutableList<StrategyModel>, val strategyOpsCallback: StrategyOpsCallback) :
     RecyclerView
     .Adapter<HomeStrategyListAdapter.ViewHolder>() {
+    private val LOG_TAG = HomeStrategyListAdapter::class.java.canonicalName
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardview = LayoutInflater.from(parent?.context)
             .inflate(R.layout.home_card_strategies, parent, false) as CardView
@@ -27,7 +30,7 @@ class HomeStrategyListAdapter(val strategyList:MutableList<StrategyModel>, val r
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.strategyNameTextView.text = strategyList[position].algoName
         holder.itemView.setOnClickListener {
-            recyclerviewSelectedPositionCallback.itemSelected(position)
+            Log.d(LOG_TAG,"clicked")
         }
     }
 

@@ -13,6 +13,11 @@ object MyStrategy {
     private var targetProfitPercent:Float = 0f
     private var stopLossPercent:Float = 0f
 
+    private var candleInterval:String = "oneDayCandle"
+    private var createdOnDate:String = "" //server will add create on date..
+
+    private var position:String = "Buy"
+
 
     fun setMSelectedInstrument(instrument: Instrument){
         selectedInstrument = instrument
@@ -38,10 +43,18 @@ object MyStrategy {
         this.quantity = quantity
     }
 
+    fun setMCandleInterval(candleInterval:String){
+        this.candleInterval = candleInterval
+    }
+
+    fun setMPosition(position:String){
+        this.position = position
+    }
+
     fun createStrategy():StrategyModel{
-        val strategy = StrategyModel(algoName = algoName,instrument = selectedInstrument.name,tradingSymbol = selectedInstrument.tradingsymbol,
-            exchange = selectedInstrument.exchange,author = "shubham",publisher = "shubham",quantity = quantity,
-            candleInterval ="1 Hour",entry = entryStrategy,position = "Buy",stopLossPercent = stopLossPercent,
+        val strategy = StrategyModel(algoName = algoName,instrument = selectedInstrument.instrument_token,tradingSymbol = selectedInstrument.tradingsymbol,
+            exchange = selectedInstrument.exchange,author = "",publisher = "",quantity = quantity,
+            candleInterval = candleInterval,entry = entryStrategy,position = position,stopLossPercent = stopLossPercent,
             targetProfitPercent = targetProfitPercent,createdOn = null
         )
         return strategy

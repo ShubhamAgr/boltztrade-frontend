@@ -25,27 +25,27 @@
             android:icon="@drawable/ic_view_headline_black_24dp"
             android:title="@string/menu_news" />
 
-    </group>
-
-    <item android:title="User Options">
-        <menu>
             <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_account_circle_black_24dp"
                 android:title="@string/menu_profile" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/menu_settings" />
-<!--            <item-->
-<!--                android:id="@+id/nav_billings"-->
-<!--                android:icon="@drawable/ic_credit_card_black_24dp"-->
-<!--                android:title="@string/menu_billings" />-->
+            <!--            <item-->
+            <!--                android:id="@+id/nav_settings"-->
+            <!--                android:icon="@drawable/ic_settings_black_24dp"-->
+            <!--                android:title="@string/menu_settings" />-->
+            <!--            <item-->
+            <!--                android:id="@+id/nav_billings"-->
+            <!--                android:icon="@drawable/ic_credit_card_black_24dp"-->
+            <!--                android:title="@string/menu_billings" />-->
             <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/ic_help_black_24dp"
                 android:title="@string/menu_help" />
-        </menu>
-    </item>
+
+    </group>
+
+<!--    <item android:title="User Options">-->
+<!--&lt;!&ndash;        &ndash;&gt;<menu></menu>-->
+<!--    </item>-->
 
 </menu>

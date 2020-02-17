@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/watchlist_card_view"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="100dp"
     android:clickable="true"
     android:elevation="1dp"
     android:gravity="center"
@@ -20,13 +20,136 @@
             android:id="@+id/instrument_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="TextView"
             android:textColor="@color/white"
-            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/instrument_name">
+
+
+            <TextView
+                android:id="@+id/open_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/lightCoral"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:fontFamily="@font/opensans_regular"
+                card_view:layout_constraintStart_toStartOf="parent"
+                android:text="O : "/>
+
+            <TextView
+                android:id="@+id/open_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="68.0"
+                android:textColor="@color/lightCoral"
+                card_view:layout_constraintStart_toEndOf="@id/open_label" />
+
+            <TextView
+                android:id="@+id/high_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:text="H : "
+                android:textColor="@color/lightCoral"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@id/open_value" />
+
+            <TextView
+                android:id="@+id/high_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/lightCoral"
+                android:textSize="12sp"
+                android:gravity="center"
+                card_view:layout_constraintStart_toEndOf="@id/high_label"
+                android:text="68.0"/>
+
+            <TextView
+                android:id="@+id/low_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:text="L : "
+                android:textColor="@color/lightCoral"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@id/high_value" />
+
+            <TextView
+                android:id="@+id/low_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/lightCoral"
+                android:gravity="center"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@id/low_label"
+                android:text="68.0"/>
+
+            <TextView
+                android:id="@+id/close_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:text="C : "
+                android:textColor="@color/lightCoral"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@id/low_value" />
+
+            <TextView
+                android:id="@+id/close_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/lightCoral"
+                android:gravity="center"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@id/close_label"
+                android:text="68.0"/>
+
+            <TextView
+                android:id="@+id/ltp_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="LTP : "
+                android:textColor="@color/lightCoral"
+                card_view:layout_constraintEnd_toStartOf="@+id/ltp_value" />
+
+            <TextView
+                android:id="@+id/ltp_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="68.0"
+                android:textColor="@color/lightCoral"
+                card_view:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

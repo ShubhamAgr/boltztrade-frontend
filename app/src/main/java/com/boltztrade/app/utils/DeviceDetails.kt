@@ -1,11 +1,16 @@
 package com.boltztrade.app.utils
 
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
 import java.util.*
+import android.content.Context.WIFI_SERVICE
+import android.net.wifi.WifiManager
+
+
 
 object DeviceDetails {
     fun getScreenResolution(context: Context): String {
@@ -62,6 +67,7 @@ object DeviceDetails {
     fun getAppRegistrationDate(){
 
     }
+
 
     fun getType(context: Context):String{
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager

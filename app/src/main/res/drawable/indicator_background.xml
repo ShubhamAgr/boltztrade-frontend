@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Container GRAY rectangle -->
+    <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:color="#FFF3E0">
     <item>
-
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        <shape
             android:shape="rectangle" >
-            <solid android:color="#ffffff"/>
+            <solid android:color="@color/chips"/>
 
             <size
                 android:height="15dp"
@@ -14,4 +15,4 @@
                 android:radius="12dp"/>
         </shape>
     </item>
-</layer-list>
+    </ripple>

@@ -7,6 +7,8 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    data class Status(val status:String)
+
     @GET("/services/rest/")
     fun mGetMyImages(@Query("method") method: String,
                      @Query("api_key") apiKey:String,
@@ -42,11 +44,48 @@ interface ApiService {
     @POST("/playground/addInstrumentToWatchListFirst")
     fun addToUserWatchList(@Header("Authorization")authorization:String,@Body addInstrumentModel: InstrumentFlow.AddInstrumentModel):Observable<String>
 
+
+    @POST("/playground/removeInstrumentToWatchListFirst")
+    fun removeInstrumentFromWatchList(@Header("Authorization")authorization:String,@Body addInstrumentModel: InstrumentFlow.AddInstrumentModel):Observable<Status>
     @POST("/strategies/create")
     fun createStrategies(@Header("Authorization")authorization:String,@Body strategy:StrategyModel):Observable<StrategyModel>
 
     @POST("/strategies/addAuthor")
     fun addStrategyAuthor(@Header("Authorization")authorization:String,@Body addStrategyAuthor: Strategies.AddStrategyAuthor):Observable<StrategyModel>
 
+
+    @POST("/strategies/backtest")
+    fun backtest(@Header("Authorization")authorization:String,@Body strategyOpsRequest: Strategies.StrategyOpsRequest):Observable<String>
+
+
+    @POST("/strategies/deploy")
+    fun deploy(@Header("Authorization")authorization:String,@Body strategyOpsRequest: Strategies.StrategyOpsRequest):Observable<String>
+
+    @POST("/strategies/backtestResult")
+    fun getBacktestResult(@Header("Authorization")authorization:String,@Body strategyOpsRequest: Strategies.StrategyOpsRequest):Observable<Strategies.BacktestModel>
+
+
+
+    @POST("/brokerService/getOhlcData")
+    fun getOhlcData(@Header("Authorization")authorization:String,@Body kiteDataRequest: BrokerService.KiteDataRequest):Observable<MutableMap<String,BrokerService.OHLCQuote>>
+
+    @POST("/brokerService/getLtp")
+    fun getLTP(@Header("Authorization")authorization:String,@Body kiteDataRequest: BrokerService.KiteDataRequest):Observable<MutableList<BrokerService.LTPQuote>>
+
+    @POST("/fcm/addToken")
+    fun addFcmToken(@Header("Authorization")authorization:String,@Body addFCMToken: FcmService.AddFCMToken):Observable<Status>
+
+
+    @POST("/strategies/delete")
+    fun deleteStrategy(@Header("Authorization")authorization:String,@Body strategyOpsRequest: Strategies.StrategyOpsRequest):Observable<String>
+
+
+
+    @POST("/management/updateUserDetail")
+    fun updateUserDetail(@Header("Authorization")authorization:String,@Body userDetail: BoltztradeUserDetail):Observable<BoltztradeUserDetail>
+
+
+    @POST("/management/getUserDetail")
+    fun getUserDetail(@Header("Authorization")authorization:String,@Body username: String):Observable<BoltztradeUserDetail>
 
 }

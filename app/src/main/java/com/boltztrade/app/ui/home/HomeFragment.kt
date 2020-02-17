@@ -16,9 +16,9 @@ import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
+import com.boltztrade.app.callbacks.StrategyOpsCallback
 import com.boltztrade.app.model.StrategyModel
 import com.boltztrade.app.model.Username
-import com.boltztrade.app.ui.strategies.StrategiesListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -41,9 +41,33 @@ class HomeFragment : Fragment() {
 //            textView.text = it
         })
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = HomeStrategyListAdapter(strategyList,object :RecyclerviewSelectedPositionCallback{
-            override fun itemSelected(position: Int) {
-                Log.d(LOG_TAG,"Item clicked")
+        viewAdapter = HomeStrategyListAdapter(strategyList,object :StrategyOpsCallback{
+            override fun backtestResult(position: Int) {
+                //don't need to implement this for strategy Fragment
+            }
+
+            override fun backtest(position: Int) {
+                //don't need to implement this for strategy Fragment
+            }
+
+            override fun deploy(position: Int) {
+                //don't need to implement this for strategy Fragment
+            }
+
+            override fun delete(position: Int) {
+                //don't need to implement this for strategy Fragment
+            }
+
+            override fun enter(position: Int) {
+                //implement user entered to strategy
+            }
+
+            override fun exit(position: Int) {
+                //implement user exited to strategy
+            }
+
+            override fun snooze(position: Int) {
+                // implement user snoozed the strategy...
             }
 
         })

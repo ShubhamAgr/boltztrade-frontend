@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -25,14 +24,6 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import android.widget.LinearLayout
-
-
-
-
-
-
-
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -242,7 +233,6 @@ class CreateStrategyPart2 : Fragment() {
         }
 
         if(false){
-
             val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
             val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
 
@@ -298,10 +288,25 @@ class CreateStrategyPart2 : Fragment() {
 
                     val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
                     val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
+                    var fieldText = fieldSpinner?.selectedItem.toString()
+                    var ma  = maSpinner?.selectedItem.toString()
+//                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->
+//                        Log.d(LOG_TAG,"age Exp position  $i")
+//                        fieldText = fieldSpinner?.selectedItem.toString()
+//
+//                    }
+//                    maSpinner.setOnItemClickListener { adapterView, view, i, l ->
+//                        Log.d(LOG_TAG,"trading exp position  $i")
+//                        ma  = maSpinner?.selectedItem.toString()
+//                    }
 
-                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
-                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
+                    var period = dialogView.findViewById<EditText>(R.id.period_edittext).text.toString().toInt()
+                    var standardDeviation = dialogView.findViewById<EditText>(R.id.standard_deviation_edittext).text.toString().toInt()
 
+                    propertiesMap["period"] = period
+                    propertiesMap["standard_deviation"] = standardDeviation
+                    propertiesMap["field"] = fieldText.toLowerCase()
+                    propertiesMap["ma type"] = ma.toLowerCase()
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
@@ -343,13 +348,25 @@ class CreateStrategyPart2 : Fragment() {
 
                     val fieldSpinner = dialogView.findViewById<Spinner>(R.id.field_spinner)!!
                     val maSpinner = dialogView.findViewById<Spinner>(R.id.ma_type_spinner)!!
+                    var fieldText = fieldSpinner?.selectedItem.toString()
+                    var ma  = maSpinner?.selectedItem.toString()
+//                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->
+//                        Log.d(LOG_TAG,"age Exp position  $i")
+//                        fieldText = fieldSpinner?.selectedItem.toString()
+//
+//                    }
+//                    maSpinner.setOnItemClickListener { adapterView, view, i, l ->
+//                        Log.d(LOG_TAG,"trading exp position  $i")
+//                        ma  = maSpinner?.selectedItem.toString()
+//                    }
 
+                    var period = dialogView.findViewById<EditText>(R.id.period_edittext).text.toString().toInt()
+                    var standardDeviation = dialogView.findViewById<EditText>(R.id.standard_deviation_edittext).text.toString().toInt()
 
-
-
-
-                    fieldSpinner.setOnItemClickListener { adapterView, view, i, l ->  Log.d(LOG_TAG,"age Exp position  $i")}
-                    maSpinner.setOnItemClickListener { adapterView, view, i, l -> Log.d(LOG_TAG,"trading exp position  $i") }
+                    propertiesMap["period"] = period
+                    propertiesMap["standard_deviation"] = standardDeviation
+                    propertiesMap["field"] = fieldText.toLowerCase()
+                    propertiesMap["ma type"] = ma.toLowerCase()
 
                 }catch (e:Exception){
                     e.printStackTrace()

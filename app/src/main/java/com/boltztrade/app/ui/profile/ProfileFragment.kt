@@ -10,8 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.boltztrade.app.BoltztradeSingleton
 
 import com.boltztrade.app.R
+import com.boltztrade.app.SharedPrefKeys
+import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.model.BoltztradeUserDetail
+import com.boltztrade.app.model.Strategies
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class ProfileFragment : Fragment() {
     private val LOG_TAG = ProfileFragment::class.java.canonicalName
@@ -20,6 +27,7 @@ class ProfileFragment : Fragment() {
     private lateinit var tradingExpSpinner:Spinner
     private lateinit var ageExpSpinner: Spinner
 
+    private var boltztradeUserDetail = BoltztradeUserDetail()
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -64,6 +72,30 @@ class ProfileFragment : Fragment() {
 
 
         return view
+    }
+
+    fun callGetProfileApi(){
+        val disp = BoltztradeRetrofit.getInstance().getUserDetail("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}",
+            BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.boltztradeUser,"")!!).subscribeOn(
+            Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            Log.d(LOG_TAG,it.toString())
+        },{
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"backtest request completed")
+        })
+    }
+
+    fun updateGetProfileApi(userDetail: BoltztradeUserDetail){
+        val disp = BoltztradeRetrofit.getInstance().updateUserDetail("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", userDetail).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            Log.d(LOG_TAG,it.toString())
+        },{
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"backtest request completed")
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

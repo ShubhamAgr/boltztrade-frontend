@@ -14,6 +14,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.time.Instant
 import java.util.*
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.text.DateFormat
+import android.app.Activity
+import android.content.Intent
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
 
 class StrategyActivity : AppCompatActivity() {
 
@@ -50,6 +61,10 @@ class StrategyActivity : AppCompatActivity() {
                     try {
                         try {
 
+                            val df = DateFormat.getTimeInstance()
+                            df.setTimeZone(TimeZone.getTimeZone("gmt"))
+                            val gmtTime = df.format(Date())
+
                             val disp = BoltztradeRetrofit.getInstance().createStrategies("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
                                 SharedPrefKeys.boltztradeToken,"")!!}",MyStrategy.createStrategy()).
                                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
@@ -83,6 +98,14 @@ class StrategyActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        val data = Intent()
+        // add data to Intent
+        Log.d(LOG_TAG,"on back pressed")
+        setResult(Activity.RESULT_OK, data)
+        finish()
     }
 
     fun switchFragment(fragment: Fragment, fragmentName:String) {

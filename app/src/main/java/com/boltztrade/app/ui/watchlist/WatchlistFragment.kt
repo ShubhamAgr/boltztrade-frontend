@@ -2,12 +2,14 @@ package com.boltztrade.app.ui.watchlist
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.BoltztradeSingleton
@@ -16,11 +18,10 @@ import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
-import com.boltztrade.app.model.Instrument
-import com.boltztrade.app.model.InstrumentFlow
-import com.boltztrade.app.model.InstrumentRegex
-import com.boltztrade.app.model.Username
+import com.boltztrade.app.model.*
 import com.boltztrade.app.ui.strategies.InstrumentListAdapter
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -42,6 +43,8 @@ class WatchlistFragment : Fragment() {
     private lateinit var instrumentSearchView: SearchView
     private val instrumentSearchList :MutableList<Instrument> = mutableListOf()
     private val userWatchlist :MutableList<Instrument> = mutableListOf()
+    private val instrumentList:MutableList<String> = mutableListOf()
+    private val instrumentOHLCQuote:MutableMap<String,BrokerService.OHLCQuote> = mutableMapOf()
     private lateinit var selectedInstrument: Instrument
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +52,7 @@ class WatchlistFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.watchlist_fragment, container, false)
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = WatchListAdapter(userWatchlist,object :RecyclerviewSelectedPositionCallback{
+        viewAdapter = WatchListAdapter(userWatchlist,instrumentOHLCQuote,object :RecyclerviewSelectedPositionCallback{
             override fun itemSelected(position: Int) {
                 Log.d(LOG_TAG,"watchlist item clicked $position")
             }
@@ -122,6 +125,42 @@ class WatchlistFragment : Fragment() {
 
         })
 
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                Log.d(LOG_TAG, "onMoveCalled")
+                return true
+            }
+
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d(LOG_TAG, "onSwipedCalled.... on direction ... $direction")
+                val position = viewHolder.adapterPosition
+                val item  = userWatchlist[viewHolder.adapterPosition]
+                val disposible =   Observable.create(ObservableOnSubscribe<Boolean> {
+                    removeUserWatchlist(userWatchlist[position].instrument_token!!)
+                    userWatchlist.removeAt(position)
+                    it.onNext(true)
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+
+                    if(it) {
+                        Log.d(LOG_TAG,"notification deleted...")
+                        viewAdapter.notifyDataSetChanged()
+
+                    }
+                },{
+                    Log.d(LOG_TAG,"something went wrong while deleting the notification")
+                    it.printStackTrace()
+                },{
+                    Log.d(LOG_TAG,"notification delete completed...")
+                })
+
+            }
+
+        }
+
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView)
+
         getUserWatchlist()
         return view
     }
@@ -162,8 +201,12 @@ class WatchlistFragment : Fragment() {
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
             for( i in it) getInstrumentDetail(i)
+            instrumentList.clear()
+            instrumentList.addAll(it)
+            handler.postDelayed(callQuoteApi(it),500)
         },{
             it.printStackTrace()
+
         },{
             Log.i(LOG_TAG,"Get instrument search Call")
         })
@@ -176,7 +219,7 @@ class WatchlistFragment : Fragment() {
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
             userWatchlist.addAll(it)
-            viewAdapter.notifyDataSetChanged()
+//            viewAdapter.notifyDataSetChanged()
 
         },{
             it.printStackTrace()
@@ -192,12 +235,83 @@ class WatchlistFragment : Fragment() {
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
+            userWatchlist.clear()
+            viewAdapter.notifyDataSetChanged()
             getUserWatchlist()
         },{
             it.printStackTrace()
         },{
             Log.i(LOG_TAG,"Get instrument search Call")
         })
+    }
+
+
+    fun removeUserWatchlist(token:String){
+        val disp = BoltztradeRetrofit.getInstance().removeInstrumentFromWatchList("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", InstrumentFlow.AddInstrumentModel(BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeUser,"")!!,token)
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            Log.d(LOG_TAG,it.toString())
+        },{
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get instrument search Call")
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(instrumentList.isNotEmpty()){
+            handler.postDelayed(callQuoteApi(instrumentList),500)
+        }
+    }
+
+    /**
+     * handler.postDelayed(callTimerTask(),2000)
+     * handler.removeCallbacksAndMessages(null)
+     * */
+
+    val handler = Handler()
+    fun callQuoteApi(instruments:MutableList<String>):Runnable{
+        return object: Runnable {
+            override fun run() {
+                try {
+                    Log.d(LOG_TAG,"Quote api called")
+                    val disp = BoltztradeRetrofit.getInstance().getOhlcData("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+                        SharedPrefKeys.boltztradeToken,"")!!}", BrokerService.KiteDataRequest(instruments)).
+                        subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                        Log.d("data",it.toString())
+                        instrumentOHLCQuote.clear()
+                        instrumentOHLCQuote.putAll(it)
+                        viewAdapter.notifyDataSetChanged()
+//                        for(i in it){
+//                            instrumentOHLCQuote[i.instrumentToken.toString()] = i
+//                        }
+                    },{
+                        it.printStackTrace()
+                    },{
+                        Log.i(LOG_TAG,"Get instrument search Call")
+                    })
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+                handler.postDelayed(this,60000)
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -90,6 +90,45 @@
         app:layout_constraintTop_toBottomOf="@+id/strategyName" />
 
 
+    <Button
+        android:id="@+id/buy_position"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/buy_button_selected"
+        android:clickable="false"
+        android:text="Buy"
+        android:textColor="@color/deep_saffron"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toStartOf="@id/divider"
+        app:layout_constraintStart_toStartOf="@+id/quantity"
+        app:layout_constraintTop_toBottomOf="@+id/quantity"
+        tools:ignore="RtlCompat" />
+
+    <Button
+        android:id="@+id/sell_position"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/sell_button_unselected"
+        android:clickable="false"
+        android:text="Sell"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/quantity"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/quantity"
+        tools:ignore="RtlCompat" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="729dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

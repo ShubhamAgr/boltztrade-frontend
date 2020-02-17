@@ -7,176 +7,514 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".ui.profile.ProfileFragment">
 
-
-    <EditText
-        android:id="@+id/editText6"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:textColor="@color/white"
-        android:ems="10"
-        android:textColorHint="@color/silver_achlice"
-        android:gravity="center"
-        android:background="@color/card"
-        android:inputType="text"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:text="Age"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+    <!-- TODO: Update blank fragment layout -->
 
-    <Spinner
-        android:id="@+id/age_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="How Long have you been trading?"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <Spinner
-        android:id="@+id/trading_exp_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="56dp"
-        android:text="Current Working status"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trading_exp_spinner" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignEnd="@+id/textView3"
-        android:layout_alignRight="@+id/textView3"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/card"
-            android:checked="false"
-            android:gravity="center"
-            android:text="Student"
-            android:textColor="@color/white"
-            android:textColorHint="@color/silver_achlice" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:background="@color/card"
-            android:checked="false"
-            android:gravity="center"
-            android:text="Professional"
-            android:textColor="@color/white"
-            android:textColorHint="@color/silver_achlice" />
-
-
-    </RadioGroup>
-
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:background="@color/card"
-        android:gravity="center"
-        android:text="Looking for full time trading Job"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver_achlice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver_achlice"
-        android:gravity="center"
-        android:background="@color/card"
-        android:text="Looking for a Client"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
-
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are you a SEBI registered Trader/Advisor/Analyst ?"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver_achlice"
-        android:gravity="center"
-        android:background="@color/card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
-
-    <EditText
-        android:id="@+id/editText7"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="32dp"
-        android:background="@color/card"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Registration Number"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver_achlice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+                <EditText
+                    android:id="@+id/user_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_margin="10dp"
+                    android:textColorHint="@color/silver_achlice"
+                    android:gravity="center"
+                    android:background="@color/card"
+                    android:inputType="text"
+                    android:textColor="@color/deep_saffron"
+                    android:hint="Full Name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:text="Age"
+                    android:gravity="left|center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/age_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@null"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/trading_exp_label"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:text="Trading Experience"
+                    android:gravity="left|center"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/trading_exp_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@null"
+                    app:layout_constraintBottom_toBottomOf="@+id/trading_exp_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/trading_exp_label"
+                    app:layout_constraintTop_toTopOf="@+id/trading_exp_label" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/radio_group_label"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:text="Qualification"
+                android:gravity="left|center"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignEnd="@+id/textView3"
+                android:layout_alignRight="@+id/textView3"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/radio_group_label"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="Student"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/silver_achlice" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:background="@null"
+                    android:checked="false"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:text="Professional"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/silver_achlice" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+
+            <TextView
+                android:id="@+id/job_label"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:gravity="left|center"
+                android:text="Looking for Job"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/client_label"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="left|center"
+                    android:text="Looking for clients"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:gravity="center|left"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/opensans_regular"
+            android:textStyle="italic"
+            android:text="SEBI registered user info (if applicable)"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/regiested_label"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="left|center"
+                    android:text="Registered Advisor"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/editText7"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_margin="10dp"
+                    android:textColorHint="@color/silver_achlice"
+                    android:gravity="center"
+                    android:background="@color/card"
+                    android:inputType="text"
+                    android:textColor="@color/deep_saffron"
+                    android:hint="Registration Number"
+                    app:layout_constraintTop_toBottomOf="@id/regiested_label"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/regiested_label2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="left|center"
+                    android:text="Registered Trader"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/editText8"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_margin="10dp"
+                    android:textColorHint="@color/silver_achlice"
+                    android:gravity="center"
+                    android:background="@color/card"
+                    android:inputType="text"
+                    android:textColor="@color/deep_saffron"
+                    android:hint="Registration Number"
+                    app:layout_constraintTop_toBottomOf="@id/regiested_label2"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:background="@drawable/indicator_background"
+            android:backgroundTint="@color/chips"
+            android:foregroundTint="@color/chips"
+            app:cardCornerRadius="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/regiested_label3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="left|center"
+                    android:text="Registered Analyst"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/editText9"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_margin="10dp"
+                    android:textColorHint="@color/silver_achlice"
+                    android:gravity="center"
+                    android:background="@color/card"
+                    android:inputType="text"
+                    android:textColor="@color/deep_saffron"
+                    android:hint="Registration Number"
+                    app:layout_constraintTop_toBottomOf="@id/regiested_label3"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/update_profile"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/chips"
+        android:elevation="48dp"
+        android:text="Save Profile"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
