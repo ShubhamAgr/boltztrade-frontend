@@ -8,6 +8,9 @@ import retrofit2.http.*
 interface ApiService {
 
     data class Status(val status:String)
+    data class MUsername(val username:String)
+    data class RequestWithTimeStamp(val username: String, val tradingHourZoneTimestamp:Long)
+    data class StrategyIdBody(val strategyId:String)
 
     @GET("/services/rest/")
     fun mGetMyImages(@Query("method") method: String,
@@ -30,6 +33,9 @@ interface ApiService {
 
     @POST("/strategies/getUserStrategies")
     fun getUserStrategies(@Header("Authorization")authorization:String,@Body username:Username):Observable<MutableList<StrategyModel>>
+
+    @POST("/strategies/getStrategyFromId")
+    fun getStrategyFromId(@Header("Authorization")authorization:String,@Body strategyIdBody: StrategyIdBody):Observable<StrategyModel>?
 
     @POST("/playground/getInstrumentList")
     fun getInstrumentList(@Header("Authorization")authorization:String,@Body instrumentRegex:InstrumentRegex):Observable<MutableList<Instrument>>
@@ -82,10 +88,30 @@ interface ApiService {
 
 
     @POST("/management/updateUserDetail")
-    fun updateUserDetail(@Header("Authorization")authorization:String,@Body userDetail: BoltztradeUserDetail):Observable<BoltztradeUserDetail>
+    fun updateUserDetail(@Header("Authorization")authorization:String,@Body updateUserDetailsData: UpdateUserDetailsData):Observable<BoltztradeUserDetail>
 
 
     @POST("/management/getUserDetail")
-    fun getUserDetail(@Header("Authorization")authorization:String,@Body username: String):Observable<BoltztradeUserDetail>
+    fun getUserDetail(@Header("Authorization")authorization:String,@Body mUsername: MUsername):Observable<BoltztradeUserDetail>
+
+
+    /**strategy related new apis*/
+    @POST("/strategies/getTotalStrategyCreated")
+    fun getTotalStrategyCreatedCount(@Header("Authorization")authorization:String,@Body mUsername: MUsername):Observable<StrategyService.TotalStrategyCreatedCount>
+
+    @POST("/strategies/getTotalStrategyBacktest")
+    fun getTotalStrategyBacktestCount(@Header("Authorization")authorization:String,@Body mUsername: MUsername):Observable<StrategyService.TotalBacktestDoneCount>
+
+    @POST("/strategies/getDeployedStrategies")
+    fun getDeployedStrategies(@Header("Authorization")authorization:String,@Body requestWithTimeStamp: RequestWithTimeStamp):Observable<MutableList<DeployModel>>
+
+    @POST("/strategies/getTotalEntryConditionMet")
+    fun getTotalEntryConditionMetCount(@Header("Authorization")authorization:String,@Body mUsername: Username):Observable<StrategyService.EntryConditionMetCount>
+
+    @POST("/strategies/getTodaysProfit")
+    fun getTodaysProfit(@Header("Authorization")authorization:String,@Body requestWithTimeStamp: RequestWithTimeStamp):Observable<StrategyService.ProfitData>
+
+    @POST("/strategies/getTotalProfitEarned")
+    fun getTotalProfitEarned(@Header("Authorization")authorization:String,@Body mUsername: Username):Observable<StrategyService.ProfitData>
 
 }

@@ -18,6 +18,7 @@ import com.boltztrade.app.MainActivity
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.model.Tokens
+import com.boltztrade.app.ui.articles.NewArticleActivity
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.SignInButton
@@ -43,7 +44,6 @@ class SignInActivity : AppCompatActivity() {
         BoltztradeSingleton.initializeFirebase()
         subscribeToTopic()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestScopes(Scope(Scopes.DRIVE_APPFOLDER))
             .requestIdToken("910071125271-6t5gknh7jpseg5n7tdvlgbdpbnoao35i.apps.googleusercontent.com")
             .requestServerAuthCode("910071125271-6t5gknh7jpseg5n7tdvlgbdpbnoao35i.apps.googleusercontent.com")
             .requestEmail()
@@ -106,6 +106,7 @@ class SignInActivity : AppCompatActivity() {
                 BoltztradeSingleton.mSharedPreferencesEditor.putString(SharedPrefKeys.boltztradeToken,it.token).apply()
                 BoltztradeSingleton.mSharedPreferencesEditor.putString(SharedPrefKeys.boltztradeUser,it.username).apply()
                 startActivity(Intent(this,MainActivity::class.java))
+//                startActivity(Intent(this,NewArticleActivity::class.java))
             },{
                 signInButton.visibility = View.VISIBLE
                 it.printStackTrace()

@@ -172,7 +172,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RadioGroup
-                android:id="@+id/radioGroup"
+                android:id="@+id/qualification_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/textView2"
@@ -188,7 +188,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/student_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -201,7 +201,7 @@
                     android:textColorHint="@color/silver_achlice" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/professional_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -246,12 +246,12 @@
                 android:textSize="20sp"
                 android:fontFamily="@font/montserrat_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                app:layout_constraintEnd_toStartOf="@+id/looking_for_job_checkbox"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/looking_for_job_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -293,12 +293,12 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+                    app:layout_constraintEnd_toStartOf="@+id/looking_for_clients_checkbox"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/looking_for_clients_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -341,7 +341,7 @@
                 android:layout_margin="10dp">
 
                 <TextView
-                    android:id="@+id/regiested_label"
+                    android:id="@+id/registered_advisor_label"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="4dp"
@@ -350,22 +350,22 @@
                     android:text="Registered Advisor"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox3"
+                    app:layout_constraintEnd_toStartOf="@+id/registered_advisor_checkbox"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/registered_advisor_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:background="@null"
                     android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/registered_advisor_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <EditText
-                    android:id="@+id/editText7"
+                    android:id="@+id/registered_advisor_text"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:ems="10"
@@ -377,7 +377,7 @@
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"
-                    app:layout_constraintTop_toBottomOf="@id/regiested_label"/>
+                    app:layout_constraintTop_toBottomOf="@id/registered_advisor_label"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -400,7 +400,7 @@
                 android:layout_margin="10dp">
 
                 <TextView
-                    android:id="@+id/regiested_label2"
+                    android:id="@+id/registered_trader_label"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="4dp"
@@ -409,22 +409,22 @@
                     android:text="Registered Trader"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox4"
+                    app:layout_constraintEnd_toStartOf="@+id/registered_trader_checkbox"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/registered_trader_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:background="@null"
                     android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label2"
+                    app:layout_constraintBottom_toBottomOf="@+id/registered_trader_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <EditText
-                    android:id="@+id/editText8"
+                    android:id="@+id/registered_trader_text"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:ems="10"
@@ -436,7 +436,7 @@
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"
-                    app:layout_constraintTop_toBottomOf="@id/regiested_label2"/>
+                    app:layout_constraintTop_toBottomOf="@id/registered_trader_label"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -458,7 +458,7 @@
                 android:layout_margin="10dp">
 
                 <TextView
-                    android:id="@+id/regiested_label3"
+                    android:id="@+id/registered_analyst_label"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="4dp"
@@ -467,22 +467,22 @@
                     android:text="Registered Analyst"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+                    app:layout_constraintEnd_toStartOf="@+id/registered_analyst_checkbox"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/registered_analyst_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:background="@null"
                     android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="@+id/regiested_label3"
+                    app:layout_constraintBottom_toBottomOf="@+id/registered_analyst_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <EditText
-                    android:id="@+id/editText9"
+                    android:id="@+id/registered_analyst_text"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:ems="10"
@@ -494,7 +494,7 @@
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"
-                    app:layout_constraintTop_toBottomOf="@id/regiested_label3"/>
+                    app:layout_constraintTop_toBottomOf="@id/registered_analyst_label"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -511,7 +511,7 @@
         android:layout_marginBottom="2dp"
         android:background="@color/chips"
         android:elevation="48dp"
-        android:text="Save Profile"
+        android:text="Edit Profile"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

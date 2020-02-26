@@ -51,15 +51,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/strategy_created_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView11"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/medium_spring_bud"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView11"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -100,15 +101,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/strategy_backtest_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView12"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/medium_spring_bud"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -148,15 +150,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/strategy_in_deployment_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView13"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/medium_spring_bud"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView13"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -197,15 +200,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/entry_condition_met_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/dark_see_green"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -248,15 +252,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/todays_profit_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView15"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/dark_see_green"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView15"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -298,15 +303,16 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/total_profit_earned_value"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView16"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/dark_see_green"
                         android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView

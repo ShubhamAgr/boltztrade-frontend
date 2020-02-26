@@ -23,6 +23,8 @@ import com.boltztrade.app.model.Strategies
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+
+
 class MainActivity : AppCompatActivity() {
 
     private val LOG_TAG = MainActivity::class.java.canonicalName
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         addFcmToken()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -79,6 +82,13 @@ class MainActivity : AppCompatActivity() {
         },{
             Log.i(LOG_TAG,"Get All Strategies Call Completed..")
         })
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val item = menu.findItem(R.id.action_settings)
+        item.isVisible = false
+        super.onPrepareOptionsMenu(menu)
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

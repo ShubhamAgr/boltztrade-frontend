@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
@@ -28,11 +29,14 @@ class BoltztradeWebViewActivity : AppCompatActivity() {
             val data= intent.extras?.getString("htmlText")
             webViewProgressbar.visibility = View.GONE
             myWebView.settings.javaScriptEnabled = true
-            myWebView.settings.loadWithOverviewMode = true
-            myWebView.settings.useWideViewPort = true
+//            myWebView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
+//            myWebView.settings.loadWithOverviewMode = true
+//            myWebView.settings.useWideViewPort = true
             myWebView.settings.builtInZoomControls = true
+            myWebView.settings.displayZoomControls = false
 
-            myWebView.loadDataWithBaseURL("", data, "text/html", "UTF-8", "");
+            myWebView.loadDataWithBaseURL("",
+                "<style>img{display: inline;height: auto;max-width: 100%;}</style>$data", "text/html", "UTF-8", "");
         }else if(isHtmlText==false){
             val url= intent.extras?.getString("url")
             myWebView.settings.javaScriptEnabled = true

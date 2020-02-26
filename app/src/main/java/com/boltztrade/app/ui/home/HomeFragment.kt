@@ -1,5 +1,6 @@
 package com.boltztrade.app.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,13 +15,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
+import com.boltztrade.app.apis.ApiService
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.callbacks.StrategyOpsCallback
+import com.boltztrade.app.model.DeployModel
 import com.boltztrade.app.model.StrategyModel
 import com.boltztrade.app.model.Username
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
+
+
+
+
 
 class HomeFragment : Fragment() {
     private val LOG_TAG = HomeFragment::class.java.canonicalName
@@ -29,6 +39,16 @@ class HomeFragment : Fragment() {
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
     private var strategyList: MutableList<StrategyModel> = mutableListOf()
+    private var deployedStrategyList: MutableList<DeployedStrategy> = mutableListOf()
+
+    private lateinit var strategyCreatedValue:TextView
+    private lateinit var strategyBacktestValue:TextView
+    private lateinit var strategyInDeploymentValue:TextView
+    private lateinit var entryConditionMetValue:TextView
+    private lateinit var todaysProfitValue:TextView
+    private lateinit var totalProfitEarnedValue:TextView
+
+    data class DeployedStrategy(var strategyId: String,var strategyName:String,var deploymentId:String)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,8 +60,16 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(this, Observer {
 //            textView.text = it
         })
+
+        strategyCreatedValue = view.findViewById(R.id.strategy_created_value)
+        strategyBacktestValue = view.findViewById(R.id.strategy_backtest_value)
+        strategyInDeploymentValue = view.findViewById(R.id.strategy_in_deployment_value)
+        entryConditionMetValue = view.findViewById(R.id.entry_condition_met_value)
+        todaysProfitValue = view.findViewById(R.id.todays_profit_value)
+        totalProfitEarnedValue = view.findViewById(R.id.total_profit_earned_value)
+
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = HomeStrategyListAdapter(strategyList,object :StrategyOpsCallback{
+        viewAdapter = HomeStrategyListAdapter(deployedStrategyList,object :StrategyOpsCallback{
             override fun backtestResult(position: Int) {
                 //don't need to implement this for strategy Fragment
             }
@@ -77,21 +105,176 @@ class HomeFragment : Fragment() {
             adapter = viewAdapter
 
         }
+        getStrategyList()
+        getTotalStrategyCreatedCount()
+        getTotalStrategyBacktestCount()
+        getTotalEntryConditionMetCount()
+        getTodaysProfit()
+        getTotalProfit()
+
+        return view
+    }
+
+
+
+    private fun getStrategyList(){
         val disp = BoltztradeRetrofit.getInstance().getUserStrategies("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
             SharedPrefKeys.boltztradeToken,"")!!}", Username(
             BoltztradeSingleton.mSharedPreferences.getString(
                 SharedPrefKeys.boltztradeUser, "")!!)
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            getDeployedStrategy()
             Log.d(LOG_TAG,it.toString())
+            strategyCreatedValue.text = it.size.toString()
+            deployedStrategyList.clear()
             strategyList.clear()
             strategyList.addAll(it)
-            viewAdapter.notifyDataSetChanged()
+//            viewAdapter.notifyDataSetChanged()
         },{
+            Log.e("error","while calling get strategy list")
             it.printStackTrace()
         },{
             Log.i(LOG_TAG,"Get All Strategies Call Completed..")
         })
-        return view
+    }
+    private fun getStrategyFromStrategyId(strategyId:String){
+        Log.d("strategy ID",strategyId)
+        val disp = BoltztradeRetrofit.getInstance().getStrategyFromId("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.StrategyIdBody(strategyId)
+        )?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
+            Log.d(LOG_TAG, "strategy response$it")
+//            strategyList.add(it)
+//            viewAdapter.notifyDataSetChanged()
+        },{
+            Log.e("error","while calling get strategy with id")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get All Strategies Call Completed..")
+        })
+    }
+
+    private fun getTotalStrategyCreatedCount(){
+        val disp = BoltztradeRetrofit.getInstance().getTotalStrategyCreatedCount("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.MUsername(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!)
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while calling get strategy created count")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get total strategy created count Completed..")
+        })
+    }
+
+    private fun getTotalStrategyBacktestCount(){
+        val disp = BoltztradeRetrofit.getInstance().getTotalStrategyBacktestCount("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.MUsername(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!)
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            strategyBacktestValue.text = it.totalBacktestDone.toString()
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while calling get strategy backtest count")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get total backtest count Completed..")
+        })
+    }
+
+    private fun getDeployedStrategy(){
+        val disp = BoltztradeRetrofit.getInstance().getDeployedStrategies("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.RequestWithTimeStamp(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!,getTradingDayTimeStampInUtc())
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            strategyInDeploymentValue.text = it.size.toString()
+            for(deployment in it){
+                for(strategy in strategyList){
+                    if(strategy._id == deployment.strategyId){
+                        deployedStrategyList.add(DeployedStrategy(strategy._id?:"", strategy.algoName,deployment._id?:""))
+                        viewAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while calling get deployed strategy")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get Deployed Strategy Completed..")
+        })
+    }
+
+    private fun getTotalEntryConditionMetCount(){
+        val disp = BoltztradeRetrofit.getInstance().getTotalEntryConditionMetCount("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", Username(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!)
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            entryConditionMetValue.text = it.entryConditionMet.toString()
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while Total entry condtion met")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get total entry condition met Completed..")
+        })
+    }
+
+    private fun getTodaysProfit(){
+        val disp = BoltztradeRetrofit.getInstance().getTodaysProfit("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.RequestWithTimeStamp(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!,getTradingDayTimeStampInUtc())
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            todaysProfitValue.setText(it.totalProfit.toString())
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while calling get todays profit")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get todays profit Completed..")
+        })
+    }
+
+    private fun getTotalProfit(){
+        val disp = BoltztradeRetrofit.getInstance().getTotalProfitEarned("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", Username(
+            BoltztradeSingleton.mSharedPreferences.getString(
+                SharedPrefKeys.boltztradeUser, "")!!)
+        ).
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            totalProfitEarnedValue.setText(it.totalProfit.toString())
+            Log.d(LOG_TAG,it.toString())
+        },{
+            Log.e("error","while calling get total profit")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get total profit Completed..")
+        })
+    }
+
+    private fun getTradingDayTimeStampInUtc():Long{
+        val calendar = Calendar.getInstance()
+        val today = calendar.getTime();
+        val todayString =  SimpleDateFormat("yyyy-MM-dd").format(today)
+        Log.d("Today Date",todayString)
+        val offset = TimeZone.getDefault().rawOffset + TimeZone.getDefault().dstSavings
+        val tradingDay = today.time - offset
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("Log","${Instant.now().toEpochMilli()}")
+        }
+        Log.d("Trading day" ,"${tradingDay}")
+
+        return 1582546795272
     }
 }

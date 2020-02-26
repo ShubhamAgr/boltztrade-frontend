@@ -23,53 +23,6 @@ class NewArticleActivity : AppCompatActivity() {
         val sourceEditor = findViewById<SourceViewEditText>(R.id.source)
         val toolbar = findViewById<AztecToolbar>(R.id.formatting_toolbar)
 
-        val publishArticle = findViewById<Button>(R.id.publish_article)
-        publishArticle.setOnClickListener {
-            Log.d("publishArticle","Button clicked")
-            try {
-
-                val purehtml = sourceEditor?.getPureHtml(false)
-                val ab = sourceEditor?.displayStyledHtml(purehtml!!)
-                Log.d("HTML","pure html ${purehtml?.length} , ${visualEditor?.toHtml(true)} ${visualEditor?.text.toString()}")
-            }catch (e:Exception){
-                Log.d("Exception",e.localizedMessage)
-                e.printStackTrace()
-            }
-        }
-//        sourceEditor?.getPureHtml(true)
-        Aztec.with(visualEditor, sourceEditor, toolbar,object :IAztecToolbarClickListener{
-            override fun onToolbarCollapseButtonClicked() {
-
-            }
-
-            override fun onToolbarExpandButtonClicked() {
-
-            }
-
-            override fun onToolbarFormatButtonClicked(
-                format: ITextFormat,
-                isKeyboardShortcut: Boolean
-            ) {
-
-            }
-
-            override fun onToolbarHeadingButtonClicked() {
-
-            }
-
-            override fun onToolbarHtmlButtonClicked() {
-
-            }
-
-            override fun onToolbarListButtonClicked() {
-
-            }
-
-            override fun onToolbarMediaButtonClicked(): Boolean {
-                return true
-            }
-
-        })
 
     }
 }

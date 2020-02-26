@@ -3,6 +3,7 @@ package com.boltztrade.app.ui.articles
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.model.Articles
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.nio.charset.Charset
 
 class ArticleFragment : Fragment() {
 
@@ -44,9 +46,10 @@ class ArticleFragment : Fragment() {
             override fun itemSelected(position: Int) {
                 Log.d(LOG_TAG,"article clicked $position")
                 if(articleList[position].htmlContent != ""){
+                    var decodedHtml = Base64.decode(articleList[position].htmlContent,Base64.DEFAULT)
                    activity?.startActivity(Intent(activity!!,BoltztradeWebViewActivity::class.java).apply {
                        putExtra("isHtmlText",true)
-                       putExtra("htmlText",articleList[position].htmlContent)
+                       putExtra("htmlText",String(decodedHtml, Charset.defaultCharset()))
                    })
                 }
             }

@@ -7,3 +7,5 @@ data class BoltztradeUserDetail(var fullName:String?="",var DateOfBirth:String?=
                                 var IsSebiRegisteredTrader:Boolean? = false, var IsSebiRegisteredAdvisor:Boolean? = false,
                                 var IsSebiRegisteredAnalyst:Boolean? = false, var sebiTraderRegistrationNumber:String? = "",
                                 var sebiRegisteredAdvisorNumber:String? ="", var sebiRegisteredAnalystNumber:String? = "")
+
+data class UpdateUserDetailsData(val username:String, val userDetail: BoltztradeUserDetail)

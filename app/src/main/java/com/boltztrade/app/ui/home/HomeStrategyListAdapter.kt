@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.R
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.callbacks.StrategyOpsCallback
+import com.boltztrade.app.model.DeployModel
 import com.boltztrade.app.model.StrategyModel
 
-class HomeStrategyListAdapter(val strategyList:MutableList<StrategyModel>, val strategyOpsCallback: StrategyOpsCallback) :
+class HomeStrategyListAdapter(val deployList:MutableList<HomeFragment.DeployedStrategy>, val strategyOpsCallback: StrategyOpsCallback) :
     RecyclerView
     .Adapter<HomeStrategyListAdapter.ViewHolder>() {
     private val LOG_TAG = HomeStrategyListAdapter::class.java.canonicalName
@@ -24,11 +25,11 @@ class HomeStrategyListAdapter(val strategyList:MutableList<StrategyModel>, val s
     }
 
     override fun getItemCount(): Int {
-        return strategyList.size
+        return deployList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.strategyNameTextView.text = strategyList[position].algoName
+        holder.strategyNameTextView.text =deployList[position].strategyName
         holder.itemView.setOnClickListener {
             Log.d(LOG_TAG,"clicked")
         }
