@@ -5,7 +5,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 android {
+    signingConfigs {
+        release {
+            storeFile file('/home/shubham/bltz_config/boltztrade.jks')
+            storePassword 'h1@mshubhAgr'
+            keyAlias = 'boltztrade_key'
+            keyPassword '2wdw4?!!'
+        }
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.boltztrade.app"
@@ -66,11 +75,12 @@ dependencies {
     //lottie
     implementation "com.airbnb.android:lottie:3.3.0"
 
-    //WYSIWYG Editor
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:v1.3.36'
+    // Add the Firebase SDK for Crashlytics.
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    //WYSIWYG Editor
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

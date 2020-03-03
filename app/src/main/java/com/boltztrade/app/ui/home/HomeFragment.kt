@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boltztrade.app.BoltztradeSingleton
+import com.boltztrade.app.MainActivity
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.ApiService
@@ -47,6 +50,8 @@ class HomeFragment : Fragment() {
     private lateinit var entryConditionMetValue:TextView
     private lateinit var todaysProfitValue:TextView
     private lateinit var totalProfitEarnedValue:TextView
+    private lateinit var noStrategiesDeployedView:ConstraintLayout
+    private lateinit var cloudImage:ImageView
 
     data class DeployedStrategy(var strategyId: String,var strategyName:String,var deploymentId:String)
     override fun onCreateView(
@@ -61,6 +66,9 @@ class HomeFragment : Fragment() {
 //            textView.text = it
         })
 
+        noStrategiesDeployedView = view.findViewById(R.id.no_strategy_in_deployment)
+        noStrategiesDeployedView.setOnClickListener {(activity as MainActivity).switchToStrategies() }
+        cloudImage = view.findViewById(R.id.cloud_image)
         strategyCreatedValue = view.findViewById(R.id.strategy_created_value)
         strategyBacktestValue = view.findViewById(R.id.strategy_backtest_value)
         strategyInDeploymentValue = view.findViewById(R.id.strategy_in_deployment_value)
@@ -194,12 +202,22 @@ class HomeFragment : Fragment() {
                 SharedPrefKeys.boltztradeUser, "")!!,getTradingDayTimeStampInUtc())
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            strategyInDeploymentValue.text = it.size.toString()
-            for(deployment in it){
-                for(strategy in strategyList){
-                    if(strategy._id == deployment.strategyId){
-                        deployedStrategyList.add(DeployedStrategy(strategy._id?:"", strategy.algoName,deployment._id?:""))
-                        viewAdapter.notifyDataSetChanged()
+            if(it.isEmpty()){
+                cloudImage.visibility = View.VISIBLE
+                noStrategiesDeployedView.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            }else{
+
+                cloudImage.visibility = View.GONE
+                noStrategiesDeployedView.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                strategyInDeploymentValue.text = it.size.toString()
+                for(deployment in it){
+                    for(strategy in strategyList){
+                        if(strategy._id == deployment.strategyId){
+                            deployedStrategyList.add(DeployedStrategy(strategy._id?:"", strategy.algoName,deployment._id?:""))
+                            viewAdapter.notifyDataSetChanged()
+                        }
                     }
                 }
             }

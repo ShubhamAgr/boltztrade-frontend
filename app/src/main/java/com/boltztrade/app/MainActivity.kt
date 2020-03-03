@@ -3,8 +3,6 @@ package com.boltztrade.app
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -15,14 +13,15 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.model.FcmService
-import com.boltztrade.app.model.Strategies
+import com.boltztrade.app.ui.strategies.StrategiesFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,7 +66,23 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun addFcmToken(){
+    fun switchToStrategies(){
+        switchFragment(StrategiesFragment.newInstance() as Fragment,"Strategies")
+    }
+
+    private fun switchFragment(fragment: Fragment, fragmentName:String) {
+        try {
+            toolbar.title = fragmentName
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment, fragment)
+            transaction.commit()
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    private fun addFcmToken(){
         val username = BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.boltztradeUser,"")
         val fcmToken = BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.FIREBASE_TOKEN_KEY,"")
         val device = Settings.Secure.getString(this.applicationContext.contentResolver, Settings.Secure.ANDROID_ID)

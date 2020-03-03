@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.boltztrade.app.BoltztradeSingleton
 
 import com.boltztrade.app.R
@@ -49,11 +50,13 @@ class StrategiesFragment : Fragment() {
     private lateinit var viewManager : RecyclerView.LayoutManager
     private var strategyList: MutableList<StrategyModel> = mutableListOf()
 
+    private lateinit var animationView: LottieAnimationView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.strategies_fragment, container, false)
+        animationView = view.findViewById(R.id.strategy_animation_view)
         moveToStrategyActivityButton = view.findViewById(R.id.button_move_to_new_strategy_activity)
         moveToStrategyActivityButton.setOnClickListener {
             startActivityForResult(Intent(activity,StrategyActivity::class.java),STRATEGY_INTENT)
@@ -181,10 +184,18 @@ class StrategiesFragment : Fragment() {
             BoltztradeSingleton.mSharedPreferences.getString(
                 SharedPrefKeys.boltztradeUser, "")!!)).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            Log.d(LOG_TAG,it.toString())
-            strategyList.clear()
-            strategyList.addAll(it)
-            viewAdapter.notifyDataSetChanged()
+            if(it.isEmpty()){
+                animationView.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            }else{
+                animationView.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                Log.d(LOG_TAG,it.toString())
+                strategyList.clear()
+                strategyList.addAll(it)
+                viewAdapter.notifyDataSetChanged()
+            }
+
         },{
             it.printStackTrace()
         },{
