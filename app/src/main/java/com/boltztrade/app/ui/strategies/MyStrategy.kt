@@ -8,6 +8,7 @@ import java.util.*
 object MyStrategy {
     private lateinit var selectedInstrument: Instrument
     private lateinit var entryStrategy:MutableList<Strategy>
+    private lateinit var exitStrategy:MutableList<Strategy>
     private  var quantity :Double = 0.0
     private lateinit var algoName:String
     private var targetProfitPercent:Float = 0f
@@ -27,6 +28,9 @@ object MyStrategy {
         this.entryStrategy = entryStrategy
     }
 
+    fun setMExitCondition(exitStrategy:MutableList<Strategy>){
+        this.exitStrategy = exitStrategy
+    }
     fun setMAlgoName(algoName:String){
         this.algoName = algoName
     }

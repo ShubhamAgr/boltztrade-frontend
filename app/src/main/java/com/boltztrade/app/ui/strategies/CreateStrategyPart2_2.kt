@@ -26,16 +26,18 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class CreateStrategyPart2 : Fragment() {
 
-    private val LOG_TAG = CreateStrategyPart2::class.java.canonicalName
+class CreateStrategyPart2_2 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
+    private val LOG_TAG = CreateStrategyPart2_2::class.java.canonicalName
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
@@ -43,8 +45,7 @@ class CreateStrategyPart2 : Fragment() {
     private val strategylist:MutableList<Strategy> = mutableListOf()
     private val operatorList:MutableList<String> = mutableListOf("crossUp","crossDown","lessThan","greaterThan","equal")
     private val optionList:MutableMap<String,MutableList<String>> = mutableMapOf()
-
-    private lateinit var createStrategyFAB :FloatingActionButton
+    private lateinit var createStrategyFAB : FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -58,7 +59,7 @@ class CreateStrategyPart2 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_create_strategy_part2, container, false)
+       val view = inflater.inflate(R.layout.fragment_create_strategy_part3, container, false)
         createStrategyFAB = view.findViewById(R.id.createStrategyFab)
 
         createStrategyFAB.setOnClickListener {
@@ -67,7 +68,7 @@ class CreateStrategyPart2 : Fragment() {
 
         viewManager = LinearLayoutManager(activity)
 
-        viewAdapter = CreateStrategyListAdapter(strategylist,object :StrategyCardTouchCallback{
+        viewAdapter = CreateStrategyListAdapter(strategylist,object : StrategyCardTouchCallback {
             override fun onSelectFirstIndicator(position: Int) {
                 Log.d(LOG_TAG,"selected first indicator $position")
                 editIndicatorDialog(strategylist.get(position).firstIndicator.name,0,position)
@@ -147,8 +148,8 @@ class CreateStrategyPart2 : Fragment() {
 
     var showDialogCounter = 0
     fun showDialog(){
-        var indicatorListDialog:IndicatorListDialog? = null
-        indicatorListDialog =  IndicatorListDialog(object :IndicatorListDialogCallback{
+        var indicatorListDialog: IndicatorListDialog? = null
+        indicatorListDialog =  IndicatorListDialog(object : IndicatorListDialogCallback {
             override fun indicatorName(name: String) {
                 showIndicatorPropertiesDialog(name)
                 indicatorListDialog?.dismiss()
@@ -160,7 +161,7 @@ class CreateStrategyPart2 : Fragment() {
 
 
     fun showComparisonOperatorDialog(position: Int){
-        var dialog:AlertDialog? = null
+        var dialog: AlertDialog? = null
         val dialogBuilder = AlertDialog.Builder(view?.context)
         dialogBuilder.setTitle("Choose Indicator")
             .setItems(R.array.comparison_operator_list
@@ -177,15 +178,15 @@ class CreateStrategyPart2 : Fragment() {
     fun editIndicatorDialog(indicator:String,indicatorPosition:Int,position:Int){
         var dialog:ShowIndicatorPropertiesDialog? = null
         dialog = if(indicatorPosition ==0){  ShowIndicatorPropertiesDialog(indicator,strategylist[position].firstIndicator.properties,object :ShowIndicatorPropertiesDialogCallback{
-                override fun getProperties(properties: MutableMap<Any?, Any?>) {
-                    if(indicatorPosition ==0){
-                        strategylist[position].firstIndicator = Indicator(indicator, properties)
-                    }else{
-                        strategylist[position].secondIndicator = Indicator(indicator, properties)
-                    }
-                    dialog?.dismiss()
+            override fun getProperties(properties: MutableMap<Any?, Any?>) {
+                if(indicatorPosition ==0){
+                    strategylist[position].firstIndicator = Indicator(indicator, properties)
+                }else{
+                    strategylist[position].secondIndicator = Indicator(indicator, properties)
                 }
-            })
+                dialog?.dismiss()
+            }
+        })
         }else {
             val secondIndicator = strategylist[position].secondIndicator?.properties
             if (secondIndicator != null) {
@@ -214,30 +215,30 @@ class CreateStrategyPart2 : Fragment() {
     <item>Bollinger Band</item>
     <item>Alligator</item>
      * */
-    private lateinit var indicator1:Indicator
-    private lateinit var indicator2:Indicator
+    private lateinit var indicator1: Indicator
+    private lateinit var indicator2: Indicator
     fun showIndicatorPropertiesDialog(indicator:String){
-        var dialog:ShowIndicatorPropertiesDialog? = null
-        dialog = ShowIndicatorPropertiesDialog(indicator,null,object :ShowIndicatorPropertiesDialogCallback{
-           override fun getProperties(properties: MutableMap<Any?, Any?>) {
-               if(showDialogCounter==0){
-                   showDialogCounter++
-                   indicator1 = Indicator(indicator,properties)
-                   dialog?.dismiss()
-                   showDialog()
-               }else{
-                   indicator2 = Indicator(indicator,properties)
-                   strategylist.add(Strategy(firstIndicator = indicator1,secondIndicator = indicator2,comparisonOperator = "crossUp",logicalOperator = "and"))
-                   viewAdapter.notifyDataSetChanged()
-                   showDialogCounter = 0
-                   dialog?.dismiss()
-               }
-           }
-       })
+        var dialog: ShowIndicatorPropertiesDialog? = null
+        dialog = ShowIndicatorPropertiesDialog(indicator,null,object :
+            ShowIndicatorPropertiesDialogCallback {
+            override fun getProperties(properties: MutableMap<Any?, Any?>) {
+                if(showDialogCounter==0){
+                    showDialogCounter++
+                    indicator1 = Indicator(indicator,properties)
+                    dialog?.dismiss()
+                    showDialog()
+                }else{
+                    indicator2 = Indicator(indicator,properties)
+                    strategylist.add(Strategy(firstIndicator = indicator1,secondIndicator = indicator2,comparisonOperator = "crossUp",logicalOperator = "and"))
+                    viewAdapter.notifyDataSetChanged()
+                    showDialogCounter = 0
+                    dialog?.dismiss()
+                }
+            }
+        })
 
         dialog.show(fragmentManager?.beginTransaction()!!,"")
     }
-
     fun setPage(){
         try {
             MyStrategy.setMEntryCondition(strategylist)
@@ -247,9 +248,18 @@ class CreateStrategyPart2 : Fragment() {
     }
 
     companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment CreateStrategyPart3.
+         */
+        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CreateStrategyPart2().apply {
+            CreateStrategyPart2_2().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -2,17 +2,50 @@
 <resources>
 
     <string-array name="indiactor_list">
-        <item>MACD</item>
-        <item>RSI</item>
-        <item>Bollinger Band</item>
-        <item>Alligator</item>
+        <item>Close Price</item>
+        <item>Simple Moving Average(SMA)</item>
+        <item>Exponential Moving Average(EMA)</item>
+        <item>Average Directional Moving Index(ADX)</item>
+        <item>Commodity Channel Index(CCI)</item>
+        <item>Parabolic SAR</item>
+        <item>Relative Strength Index(RSI)</item>
+        <item>Stochastic RSI</item>
+        <item>William R</item>
+        <item>Stochastic Oscillator K</item>
+        <item>Stochastic Oscillator D</item>
+        <item>Minus Directional Indicator</item>
+        <item>Plus Directional Indicator</item>
+        <item>Bollinger Band Width</item>
+        <item>Lower Bollinger Band</item>
+        <item>Upper Bollinger Band</item>
+        <item>Middle Bollinger Band</item>
+        <item>Percent B</item>
+        <item>Ichimoku Tenkan Sen</item>
+        <item>Ichimoku Kijun Sen</item>
+        <item>Ichimoku Span A</item>
+        <item>Ichimoku Senkan Span B</item>
+        <item>Ichimoky Chikou Span</item>
+        <item>Keltner Channel Middle</item>
+        <item>Keltner Channel Upper</item>
+        <item>Keltner Channel Lower</item>
+        <item>Co-Relation Coefficient</item>
+        <item>Covariance</item>
+        <item>Linear Regression</item>
+        <item>Standard Deviation</item>
+        <item>Variance</item>
+        <item>Standard Error</item>
+        <item>Positive Volume Index(PVI)</item>
+        <item>Accumulation Distribution</item>
+        <item>Chaikin Money Flow</item>
+        <item>Volume Weighted Average Price(VWAP)</item>
+        <item>Moving Volume Weighted Average Price(MVWAP)</item>
+        <item>Negative Volume Index(NVI)</item>
+        <item>On Balance Volume Indicator</item>
     </string-array>
 
     <string-array name="comparison_operator_list">
         <item>&lt;</item>
         <item>&gt;</item>
-        <item>&lt;=</item>
-        <item>&gt;=</item>
         <item>==</item>
     </string-array>
 

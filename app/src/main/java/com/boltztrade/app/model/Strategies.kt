@@ -5,9 +5,8 @@ object Strategies {
 
     data class StrategyOpsRequest(val strategyId: String,val username:String)
 
-    data class BacktestModel(var _id: String?,var userId:String?,var strategyID: String?,var timestamp:Long?=null,var largestWinningTrade:Double?=null,
-                             var largestLosingTrade:Double?=null,var winningTrade:Double?=null, var losingTrade:Double?=null,
-                             var winPercentage:Double?=null,var lossPercentage:Double?=null,var grossWinningTrade:Double?=null,
-                             var averageWinningTrade:Double?=null,var grossLosingTrade:Double?=null,var averageLosingTrade:Double?=null,
-                             var netProfit:Double?=null,var netLoss:Double?=null,var result:String?=null,var fileName:String? = "")
+    data class BacktestModel(var _id: String?,var userId:String?,var strategyID: String?,var timestamp:Long?=null,var averageProfitableTrade:String?=null,
+                             var expectedShortFall:String?=null,var maximumDrawdown:String?=null,var breakEvenTrade:String?=null,var numOfLosingTrade:String?=null,
+                             var numOfTrade:String?=null,var numOfWinningTrade:String?=null,var profitLossValue:String?=null,var rewardRiskRatio:String?=null,
+                             var grossLoss:String?=null,var grossProfit:String?=null, var valueAtRisk:String?=null, var buyvsHold:String?=null)
 }

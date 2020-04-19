@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 
 import com.boltztrade.app.R
 
@@ -36,7 +35,7 @@ class CreateStrategyPart3 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_create_strategy_part3, container, false)
+        val view =  inflater.inflate(R.layout.fragment_create_strategy_part4, container, false)
         profitPercentEditText = view.findViewById(R.id.target_profit_edittext)
         lossPercentEditText = view.findViewById(R.id.stop_loss_edittext)
 

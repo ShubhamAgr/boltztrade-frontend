@@ -70,7 +70,7 @@ class StrategiesFragment : Fragment() {
                     SharedPrefKeys.boltztradeUser,"")!!)).
                     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     Log.d(LOG_TAG,it.toString())
-                    if(it.averageLosingTrade != null) showBacktestResult(it)
+                    if(it.averageProfitableTrade!= null) showBacktestResult(it)
                     else Toast.makeText(activity,"no backtest found",Toast.LENGTH_LONG).show()
                 },{
                     it.printStackTrace()
@@ -248,19 +248,6 @@ class StrategiesFragment : Fragment() {
         val netLossTextView :TextView = dialogView.findViewById(R.id.net_loss)
         val lossPercentageTextView:TextView = dialogView.findViewById(R.id.loss_percentage)
 
-        grossWinningTradeTextView.text = "Gross Winning Trades: ₹${backtestModel.grossWinningTrade}"
-        winningTradeTextView.text = "Winning Trade: ${backtestModel.winningTrade}"
-        largestWinningTradeTextView.text = "Largest Winning Trade: ₹${backtestModel.largestWinningTrade}"
-        averageWinningTradeTextView.text = "Average Winning Trade: ₹${backtestModel.averageWinningTrade}"
-        netProfitTextView.text = "Net Profit: ₹${backtestModel.netProfit}"
-        winPercentageTextView.text = "${backtestModel.winPercentage}%"
-
-        grossLossingTradeTextView.text = "Gross Losing Trades: ₹${backtestModel.grossLosingTrade}"
-        LossingTradeTextView.text = "Lossing Trade: ${backtestModel.losingTrade}"
-        largestLossingTradeTextView.text = "Largest Losing Trade: ₹${backtestModel.largestLosingTrade}"
-        averageLossingTradeTextView.text = "Average Losing Trade: ₹${backtestModel.averageLosingTrade}"
-        netLossTextView.text = "Net Loss: ₹${backtestModel.netLoss}"
-        lossPercentageTextView.text = "${backtestModel.lossPercentage}%"
 
         deployButton.setOnClickListener {
 

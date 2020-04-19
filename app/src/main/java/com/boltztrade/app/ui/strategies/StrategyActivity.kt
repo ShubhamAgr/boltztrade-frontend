@@ -49,11 +49,25 @@ class StrategyActivity : AppCompatActivity() {
                     switchFragment(currentFragment,"createStrategyPart2")
                 }
                 is CreateStrategyPart2->{
-                    (currentFragment as CreateStrategyPart2).setPage()
-                    currentFragment = CreateStrategyPart3.newInstance("","")
-                    switchFragment(currentFragment,"createStrategyPart3")
-                    fragmentSwitcherButton.text = "Save & Backtest"
+                    try {
+                        (currentFragment as CreateStrategyPart2).setPage()
+                        currentFragment = CreateStrategyPart2_2.newInstance("","")
+                        switchFragment(currentFragment,"createStrategyPart2_2")
+                    }catch (e:Exception){
+                     e.printStackTrace()
+                    }
 
+
+                }
+                is CreateStrategyPart2_2->{
+                    try {
+//                    (currentFragment as CreateStrategyPart2_2).setPage()
+                        currentFragment = CreateStrategyPart3.newInstance("","")
+                        switchFragment(currentFragment,"createStrategyPart3")
+                        fragmentSwitcherButton.text = "Save & Backtest"
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                 }
                 is CreateStrategyPart3->{
                     (currentFragment as CreateStrategyPart3).setPage()
