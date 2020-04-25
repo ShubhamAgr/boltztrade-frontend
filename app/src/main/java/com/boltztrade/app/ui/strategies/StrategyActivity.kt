@@ -61,7 +61,7 @@ class StrategyActivity : AppCompatActivity() {
                 }
                 is CreateStrategyPart2_2->{
                     try {
-//                    (currentFragment as CreateStrategyPart2_2).setPage()
+                        (currentFragment as CreateStrategyPart2_2).setPage()
                         currentFragment = CreateStrategyPart3.newInstance("","")
                         switchFragment(currentFragment,"createStrategyPart3")
                         fragmentSwitcherButton.text = "Save & Backtest"
@@ -82,6 +82,9 @@ class StrategyActivity : AppCompatActivity() {
                             val disp = BoltztradeRetrofit.getInstance().createStrategies("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
                                 SharedPrefKeys.boltztradeToken,"")!!}",MyStrategy.createStrategy()).
                                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+
+                                Log.d(LOG_TAG,it.toString())
+
                                 val disp2 = BoltztradeRetrofit.getInstance().addStrategyAuthor("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
                                     SharedPrefKeys.boltztradeToken,"")!!}", Strategies.AddStrategyAuthor(it._id?:"",BoltztradeSingleton.mSharedPreferences.getString(
                                     SharedPrefKeys.boltztradeUser,"")!!)).

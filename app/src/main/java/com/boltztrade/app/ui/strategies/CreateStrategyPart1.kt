@@ -21,6 +21,8 @@ import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.model.Instrument
 import com.boltztrade.app.model.InstrumentRegex
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -104,16 +106,20 @@ class CreateStrategyPart1 : Fragment() {
         instrumentSearchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(LOG_TAG,"Query Submitted $query")
-                searchText(query?:"none")
+               if(query?.length!! != 0){
+                   getList(query?:"")
+               }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               Log.d(LOG_TAG,"Text change $newText")
-                if(newText?.length!! >= 4){
-                    searchText(newText)
+                Log.d(LOG_TAG,"Text change $newText")
+                if(newText?.length!! == 0){
+                    visibility(false)
                 }else{
-                   visibility(false)
+                    visibility(true)
+                    getList(newText)
+
                 }
                 return true
             }
@@ -163,22 +169,19 @@ class CreateStrategyPart1 : Fragment() {
         }
     }
 
-    fun searchText(data:String){
-        val disp = BoltztradeRetrofit.getInstance().getInstrumentList("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
-            SharedPrefKeys.boltztradeToken,"")!!}", InstrumentRegex(data)).
-            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            Log.d(LOG_TAG,it.toString())
-            if(it.size>0){
-                visibility(true)
-                instrumentSearchList.clear()
-                instrumentSearchList.addAll(it)
-                viewAdapter.notifyDataSetChanged()
-            }
+    fun getList(s:String){
+        val disposible = Observable.create(ObservableOnSubscribe<List<Instrument>> {
+            val list = BoltztradeSingleton.mDatabase.instrumentDao().instrumentList(s)
+            it.onNext(list)
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            instrumentSearchList.clear()
+            instrumentSearchList.addAll(it)
+            viewAdapter.notifyDataSetChanged()
+            Log.d("instrumentsearch list","$instrumentSearchList")
         },{
+            Log.d(LOG_TAG,"something went wrong while adding notification...")
             it.printStackTrace()
-        },{
-            Log.i(LOG_TAG,"Get instrument search Call")
-        })
+        },{ Log.d(LOG_TAG,"onComplete")})
     }
 
     companion object {

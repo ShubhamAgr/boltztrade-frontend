@@ -17,11 +17,16 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.apis.KiteRetrofit
 import com.boltztrade.app.model.FcmService
+import com.boltztrade.app.model.Instrument
 import com.boltztrade.app.ui.strategies.StrategiesFragment
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.io.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             ), drawerLayout
         )
 
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
@@ -81,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
     private fun addFcmToken(){
         val username = BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.boltztradeUser,"")
         val fcmToken = BoltztradeSingleton.mSharedPreferences.getString(SharedPrefKeys.FIREBASE_TOKEN_KEY,"")

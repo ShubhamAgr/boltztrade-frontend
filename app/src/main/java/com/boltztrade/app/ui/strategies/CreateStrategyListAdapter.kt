@@ -33,7 +33,7 @@ class CreateStrategyListAdapter(val strategies:MutableList<Strategy> = mutableLi
         holder.comparisonOperatorButton.setOnClickListener {strategyCardTouchCallback.onSelectComparisonOperator(position)}
 
         holder.firstIndicatorButton.text = strategies[position].firstIndicator.name
-        holder.secondIndicatorButton.text = strategies[position].secondIndicator.name
+        holder.secondIndicatorButton.text = if(strategies[position].secondValue != null)strategies[position].secondValue.toString() else strategies[position].secondIndicator?.name
         holder.logicalOperatorButton.text = strategies[position].logicalOperator
         holder.comparisonOperatorButton.text = strategies[position].comparisonOperator
 

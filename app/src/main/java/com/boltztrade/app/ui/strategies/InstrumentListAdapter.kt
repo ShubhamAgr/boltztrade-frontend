@@ -25,7 +25,7 @@ class InstrumentListAdapter(val instrumentSearchList :MutableList<Instrument> = 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.instrumentName.text = instrumentSearchList[position].name
+        holder.instrumentName.text = instrumentSearchList[position].tradingsymbol
         holder.instrumentExchange.text = instrumentSearchList[position].exchange
         holder.itemView.setOnClickListener {
             recyclerviewSelectedPositionCallback.itemSelected(position)

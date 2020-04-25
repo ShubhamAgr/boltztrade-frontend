@@ -1,15 +1,11 @@
 package com.boltztrade.app.apis
 
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import com.google.gson.GsonBuilder
-import com.google.gson.Gson
 
-
-
-object BoltztradeRetrofit {
-
+object KiteRetrofit {
     var gson = GsonBuilder()
         .setLenient()
         .create()
@@ -18,11 +14,11 @@ object BoltztradeRetrofit {
             RxJava2CallAdapterFactory.create())
         .addConverterFactory(
             GsonConverterFactory.create())
-        .baseUrl("http://192.168.0.100:8082")//"https://server.boltztrade.com:8080"
+        .baseUrl("https://api.kite.trade/")//"https://server.boltztrade.com:8080"
         .build()
-    private var instance = mRetrofit.create(ApiService::class.java)
+    private var instance = mRetrofit.create(KiteApiService::class.java)
 
-    fun getInstance():ApiService{
+    fun getInstance():KiteApiService{
         return this.instance
     }
 }

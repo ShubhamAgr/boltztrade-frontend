@@ -17,6 +17,7 @@ import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.apis.KiteRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.model.*
 import com.boltztrade.app.ui.strategies.InstrumentListAdapter
@@ -24,6 +25,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.io.*
 
 class WatchlistFragment : Fragment() {
 
@@ -83,21 +85,22 @@ class WatchlistFragment : Fragment() {
             adapter = viewAdapter2
 
         }
-        visibility(false)
-
         instrumentSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(LOG_TAG,"Query Submitted $query")
-                searchText(query?:"none")
+                if(query?.length!! != 0){
+                    getList(query?:"")
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d(LOG_TAG,"Text change $newText")
-                if(newText?.length!! >= 4){
-                    searchText(newText)
-                }else{
+                if(newText?.length!! == 0){
                     visibility(false)
+                }else{
+                    visibility(true)
+                    getList(newText)
 
                 }
 
@@ -131,8 +134,6 @@ class WatchlistFragment : Fragment() {
                 Log.d(LOG_TAG, "onMoveCalled")
                 return true
             }
-
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 Log.d(LOG_TAG, "onSwipedCalled.... on direction ... $direction")
                 val position = viewHolder.adapterPosition
@@ -160,10 +161,26 @@ class WatchlistFragment : Fragment() {
         }
 
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView)
-
         getUserWatchlist()
+        visibility(false)
         return view
     }
+
+
+    fun getList(s:String){
+        val disposible = Observable.create(ObservableOnSubscribe<List<Instrument>> {
+            val list = BoltztradeSingleton.mDatabase.instrumentDao().instrumentList(s)
+            it.onNext(list)
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            instrumentSearchList.clear()
+            instrumentSearchList.addAll(it)
+            viewAdapter2.notifyDataSetChanged()
+            Log.d("instrumentsearch list","$instrumentSearchList")
+        },{
+            Log.d(LOG_TAG,"something went wrong while adding notification...")
+            it.printStackTrace()
+        },{ Log.d(LOG_TAG,"onComplete")})
+        }
 
     fun visibility(boolean: Boolean){
         if(boolean){
@@ -181,7 +198,6 @@ class WatchlistFragment : Fragment() {
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             Log.d(LOG_TAG,it.toString())
             if(it.size>0){
-                visibility(true)
                 instrumentSearchList.clear()
                 instrumentSearchList.addAll(it)
                 viewAdapter2.notifyDataSetChanged()

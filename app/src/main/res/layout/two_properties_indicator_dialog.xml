@@ -53,6 +53,39 @@
             android:textColor="@color/deep_saffron" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/property_two_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/property_one_container">
+
+        <TextView
+            android:id="@+id/property_two_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Period:"
+            android:textColor="@color/deep_saffron" />
+
+        <EditText
+            android:id="@+id/property_two_value"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/border_layout"
+            android:ems="10"
+            android:inputType="number"
+            android:padding="10dp"
+            android:text="14"
+            android:textColor="@color/deep_saffron" />
+
+
+    </LinearLayout>
 
 
     <Button
@@ -67,5 +100,5 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/property_one_container" />
+        app:layout_constraintTop_toBottomOf="@+id/property_two_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

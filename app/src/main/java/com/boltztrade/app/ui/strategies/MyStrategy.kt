@@ -13,8 +13,7 @@ object MyStrategy {
     private lateinit var algoName:String
     private var targetProfitPercent:Float = 0f
     private var stopLossPercent:Float = 0f
-
-    private var candleInterval:String = "oneDayCandle"
+    private var candleInterval:String = "day" //minute, day, 3minute,5minute,10minute,15minute,30minute,60minute
     private var createdOnDate:String = "" //server will add create on date..
 
     private var position:String = "Buy"
@@ -59,7 +58,7 @@ object MyStrategy {
         val strategy = StrategyModel(algoName = algoName,instrument = selectedInstrument.instrument_token,tradingSymbol = selectedInstrument.tradingsymbol,
             exchange = selectedInstrument.exchange,author = "",publisher = "",quantity = quantity,
             candleInterval = candleInterval,entry = entryStrategy,position = position,stopLossPercent = stopLossPercent,
-            targetProfitPercent = targetProfitPercent,createdOn = null
+            targetProfitPercent = targetProfitPercent,createdOn = null,exit = exitStrategy
         )
         return strategy
     }

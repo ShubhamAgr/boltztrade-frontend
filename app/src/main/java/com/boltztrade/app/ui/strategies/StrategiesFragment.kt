@@ -81,8 +81,8 @@ class StrategiesFragment : Fragment() {
 
             override fun backtest(position: Int) {
                 val disp = BoltztradeRetrofit.getInstance().backtest("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
-                    SharedPrefKeys.boltztradeToken,"")!!}", Strategies.StrategyOpsRequest(strategyList[position]._id?:"",BoltztradeSingleton.mSharedPreferences.getString(
-                    SharedPrefKeys.boltztradeUser,"")!!)).
+                    SharedPrefKeys.boltztradeToken,"")!!}", Strategies.BacktestOpsRequest(strategyList[position]._id?:"",BoltztradeSingleton.mSharedPreferences.getString(
+                    SharedPrefKeys.boltztradeUser,"")!!,"1554091231000","1586271031000")).
                     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     Toast.makeText(activity,it,Toast.LENGTH_LONG).show()
                     Log.d(LOG_TAG,it.toString())

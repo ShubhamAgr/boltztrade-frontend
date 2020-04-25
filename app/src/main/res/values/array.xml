@@ -3,6 +3,7 @@
 
     <string-array name="indiactor_list">
         <item>Close Price</item>
+        <item>Price Point</item>
         <item>Simple Moving Average(SMA)</item>
         <item>Exponential Moving Average(EMA)</item>
         <item>Average Directional Moving Index(ADX)</item>
@@ -44,6 +45,8 @@
     </string-array>
 
     <string-array name="comparison_operator_list">
+        <item>crossUp</item>
+        <item>crossDown</item>
         <item>&lt;</item>
         <item>&gt;</item>
         <item>==</item>

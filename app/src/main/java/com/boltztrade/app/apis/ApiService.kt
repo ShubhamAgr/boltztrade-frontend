@@ -61,7 +61,7 @@ interface ApiService {
 
 
     @POST("/strategies/backtest")
-    fun backtest(@Header("Authorization")authorization:String,@Body strategyOpsRequest: Strategies.StrategyOpsRequest):Observable<String>
+    fun backtest(@Header("Authorization")authorization:String,@Body backtestOpsRequest: Strategies.BacktestOpsRequest):Observable<String>
 
 
     @POST("/strategies/deploy")

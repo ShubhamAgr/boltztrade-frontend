@@ -176,30 +176,42 @@ class CreateStrategyPart2 : Fragment() {
 
     fun editIndicatorDialog(indicator:String,indicatorPosition:Int,position:Int){
         var dialog:ShowIndicatorPropertiesDialog? = null
-        dialog = if(indicatorPosition ==0){  ShowIndicatorPropertiesDialog(indicator,strategylist[position].firstIndicator.properties,object :ShowIndicatorPropertiesDialogCallback{
+        dialog = if(indicatorPosition ==0){  ShowIndicatorPropertiesDialog(0,indicator,strategylist[position].firstIndicator.properties,object :ShowIndicatorPropertiesDialogCallback{
                 override fun getProperties(properties: MutableMap<Any?, Any?>) {
                     if(indicatorPosition ==0){
                         strategylist[position].firstIndicator = Indicator(indicator, properties)
                     }else{
-                        strategylist[position].secondIndicator = Indicator(indicator, properties)
+                        if(strategylist[position].secondValue != null){
+                            strategylist[position].secondIndicator = Indicator(indicator, properties)
+                        }
+
                     }
                     dialog?.dismiss()
                 }
-            })
+
+            override fun getPrice(price: Double) {
+
+            }
+        })
         }else {
             val secondIndicator = strategylist[position].secondIndicator?.properties
             if (secondIndicator != null) {
-                ShowIndicatorPropertiesDialog(indicator,secondIndicator ,
+                ShowIndicatorPropertiesDialog(1,indicator,secondIndicator ,
                     object : ShowIndicatorPropertiesDialogCallback {
                         override fun getProperties(properties: MutableMap<Any?, Any?>) {
-                            if (indicatorPosition == 0) {
-                                strategylist[position].firstIndicator =
-                                    Indicator(indicator, properties)
-                            } else {
-                                strategylist[position].secondIndicator =
-                                    Indicator(indicator, properties)
+                            if(indicatorPosition ==0){
+                                strategylist[position].firstIndicator = Indicator(indicator, properties)
+                            }else{
+                                if(strategylist[position].secondValue != null){
+                                    strategylist[position].secondIndicator = Indicator(indicator, properties)
+                                }
+
                             }
                             dialog?.dismiss()
+                        }
+
+                        override fun getPrice(price: Double) {
+
                         }
                     })
             }else{
@@ -218,7 +230,7 @@ class CreateStrategyPart2 : Fragment() {
     private lateinit var indicator2:Indicator
     fun showIndicatorPropertiesDialog(indicator:String){
         var dialog:ShowIndicatorPropertiesDialog? = null
-        dialog = ShowIndicatorPropertiesDialog(indicator,null,object :ShowIndicatorPropertiesDialogCallback{
+        dialog = ShowIndicatorPropertiesDialog(showDialogCounter,indicator,null,object :ShowIndicatorPropertiesDialogCallback{
            override fun getProperties(properties: MutableMap<Any?, Any?>) {
                if(showDialogCounter==0){
                    showDialogCounter++
@@ -233,7 +245,23 @@ class CreateStrategyPart2 : Fragment() {
                    dialog?.dismiss()
                }
            }
-       })
+
+            override fun getPrice(price: Double) {
+                if(showDialogCounter ==1) {
+                    strategylist.add(
+                        Strategy(
+                            firstIndicator = indicator1,
+                            secondValue = price,
+                            comparisonOperator = "crossUp",
+                            logicalOperator = "and"
+                        )
+                    )
+                    viewAdapter.notifyDataSetChanged()
+                    showDialogCounter = 0
+                    dialog?.dismiss()
+                }
+            }
+        })
 
         dialog.show(fragmentManager?.beginTransaction()!!,"")
     }

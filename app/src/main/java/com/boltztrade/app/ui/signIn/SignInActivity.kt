@@ -1,32 +1,34 @@
 package com.boltztrade.app.ui.signIn
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.boltztrade.app.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
 import android.content.Intent
 import android.net.wifi.WifiManager
+import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.MainActivity
+import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
+import com.boltztrade.app.apis.KiteRetrofit
+import com.boltztrade.app.model.Instrument
 import com.boltztrade.app.model.Tokens
-import com.boltztrade.app.ui.articles.NewArticleActivity
-import com.google.android.gms.common.Scopes
-import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.Scope
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import java.io.*
 
 
 class SignInActivity : AppCompatActivity() {
@@ -40,8 +42,6 @@ class SignInActivity : AppCompatActivity() {
         supportActionBar?.hide()
         signInButton   = findViewById<SignInButton>(R.id.sign_in_button)
         signInButton.visibility = View.GONE
-        BoltztradeSingleton.initializeSharedPreferences(this)
-        BoltztradeSingleton.initializeFirebase()
         subscribeToTopic()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("910071125271-6t5gknh7jpseg5n7tdvlgbdpbnoao35i.apps.googleusercontent.com")
@@ -49,6 +49,7 @@ class SignInActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        tryToDownloadCSV()
         checkIfUserAlreadySignedIn(mGoogleSignInClient)
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener { signIn(mGoogleSignInClient) }
@@ -98,7 +99,6 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-
     fun checkWithBackend(idToken:String){
         val disposible =  BoltztradeRetrofit.getInstance().loginWithGmail(Tokens("$idToken"))
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
@@ -114,6 +114,51 @@ class SignInActivity : AppCompatActivity() {
             },{
                 Log.d(LOG_TAG,"google login api call completed")
             })
+    }
+
+    fun tryToDownloadCSV(){
+        val disposible = KiteRetrofit.getInstance().getInstruments("X-Kite-Version: 3").
+        subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            val file = File("instrumentList")
+            it.byteStream()
+            val bis: InputStream = BufferedInputStream(it.byteStream(), 1024 * 8)
+            var sCurrentLine: String?
+            val disposible = Observable.create(ObservableOnSubscribe<Boolean> {
+                try {
+                    BoltztradeSingleton.mDatabase.instrumentDao().nukeTable()
+                    val r = BufferedReader(InputStreamReader(bis))
+                    val total = StringBuilder()
+                    var line: String?
+                    it.onNext(true)
+                    Log.d(LOG_TAG,r.readLine())
+                    while (r.readLine().also { line = it } != null) {
+                        val values = line?.split(",")
+                        if(values?.size == 12 ){
+                            BoltztradeSingleton.mDatabase.instrumentDao().insertAll(
+                                Instrument(
+                                    values[0], values[1].toInt(), values[2],values[3], values[4].toInt(), values[5],
+                                    values[6].toDouble(), values[7].toDouble(), values[8].toInt(),
+                                    values[9], values[10], values[11]
+                                )
+                            )
+                        }
+                        total.append(line).append('\n')
+                    }
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+
+            },{
+                Log.d(LOG_TAG,"something went wrong while adding notification...")
+                it.printStackTrace()
+            },{ Log.d(LOG_TAG,"onComplete")})
+
+        },{
+            it.printStackTrace()
+        },{
+
+        })
     }
 
     fun subscribeToTopic(){
