@@ -20,6 +20,7 @@ import com.boltztrade.app.BoltztradeSingleton
 
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
+import com.boltztrade.app.apis.ApiService
 import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.callbacks.StrategyCardTouchCallback
@@ -28,10 +29,12 @@ import com.boltztrade.app.model.Strategies
 import com.boltztrade.app.model.StrategyModel
 import com.boltztrade.app.model.Username
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.math.BigDecimal
 
 class StrategiesFragment : Fragment() {
 
@@ -70,8 +73,8 @@ class StrategiesFragment : Fragment() {
                     SharedPrefKeys.boltztradeUser,"")!!)).
                     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     Log.d(LOG_TAG,it.toString())
-                    if(it.averageProfitableTrade!= null) showBacktestResult(it)
-                    else Toast.makeText(activity,"no backtest found",Toast.LENGTH_LONG).show()
+                    showBacktestResult(it)
+//                    else Toast.makeText(activity,"no backtest found",Toast.LENGTH_LONG).show()
                 },{
                     it.printStackTrace()
                 },{
@@ -112,6 +115,10 @@ class StrategiesFragment : Fragment() {
 
             override fun delete(position: Int) {
                 // delete api call
+            }
+
+            override fun edit(position: Int) {
+                getStrategyFromStrategyId(strategyId = strategyList[position]._id?:"test")
             }
 
             override fun enter(position: Int) {
@@ -176,6 +183,26 @@ class StrategiesFragment : Fragment() {
     }
 
 
+    private fun getStrategyFromStrategyId(strategyId:String){
+        Log.d("strategy ID",strategyId)
+        val disp = BoltztradeRetrofit.getInstance().getStrategyFromId("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.StrategyIdBody(strategyId)
+        )?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
+            Log.d(LOG_TAG, "strategy response$it")
+            val gson = Gson()
+            val strategy = gson.toJson(it)
+            val intent = Intent(activity,StrategyActivity::class.java)
+            intent.putExtra("strategy",strategy)
+            startActivityForResult(intent,STRATEGY_INTENT)
+//            strategyList.add(it)
+//            viewAdapter.notifyDataSetChanged()
+        },{
+            Log.e("error","while calling get strategy with id")
+            it.printStackTrace()
+        },{
+            Log.i(LOG_TAG,"Get All Strategies Call Completed..")
+        })
+    }
 
     fun getUserStrategies(){
         Log.d(LOG_TAG,"Fetching User strategies")
@@ -232,25 +259,60 @@ class StrategiesFragment : Fragment() {
         val inflater = layoutInflater
 
         val dialogView=inflater.inflate(R.layout.dialog_backtest_result,null)
-        val deployButton = dialogView.findViewById(R.id.deploy_button) as Button
+        val editButton = dialogView.findViewById(R.id.deploy_button) as Button
 
-        val grossWinningTradeTextView :TextView = dialogView.findViewById(R.id.gross_winning_trades)
+        val profitPercent = (backtestModel.averageProfitableTrade?.toBigDecimal()?.multiply(BigDecimal(100)))?.toInt()
+        val lossPercent = 100.minus(profitPercent?:0)
+
         val winningTradeTextView :TextView = dialogView.findViewById(R.id.winning_trades)
-        val largestWinningTradeTextView:TextView = dialogView.findViewById(R.id.largest_winning_trade)
-        val averageWinningTradeTextView:TextView = dialogView.findViewById(R.id.average_winning_trade)
         val netProfitTextView :TextView = dialogView.findViewById(R.id.net_profit)
         val winPercentageTextView:TextView = dialogView.findViewById(R.id.win_percentage)
 
-        val grossLossingTradeTextView :TextView = dialogView.findViewById(R.id.gross_lossing_trade)
-        val LossingTradeTextView :TextView = dialogView.findViewById(R.id.lossing_trade)
-        val largestLossingTradeTextView:TextView = dialogView.findViewById(R.id.largest_lossing_trade)
-        val averageLossingTradeTextView:TextView = dialogView.findViewById(R.id.average_lossing_trade)
+        val lossingTradeTextView :TextView = dialogView.findViewById(R.id.lossing_trade)
         val netLossTextView :TextView = dialogView.findViewById(R.id.net_loss)
         val lossPercentageTextView:TextView = dialogView.findViewById(R.id.loss_percentage)
 
+        val expectedShorFallTextView:TextView = dialogView.findViewById(R.id.expected_short_fall)
+        val maximumDrawDownTextView:TextView  = dialogView.findViewById(R.id.maximum_draw_down)
+        val rewardRiskRatioTextView:TextView = dialogView.findViewById(R.id.reward_risk_ratio)
+        val strategyBuyvsHoldTextView:TextView = dialogView.findViewById(R.id.strategy_vs_buy_hold)
 
-        deployButton.setOnClickListener {
+        winPercentageTextView.setText("$profitPercent %")
+        lossPercentageTextView.setText("$lossPercent %")
+        netProfitTextView.setText("Net Profit: ₹ ${backtestModel.grossProfit}")
+        netLossTextView.setText("Net Loss: ₹ ${backtestModel.grossLoss}")
+        winningTradeTextView.setText("Num. Of Winning Trades: ${backtestModel.numOfWinningTrade}")
+        lossingTradeTextView.setText("Num. Of Lossing Trades: ${backtestModel.numOfLosingTrade}")
+        val expectedShortfall = backtestModel.expectedShortFall?.split(".")?: mutableListOf("${backtestModel.expectedShortFall}")
+        val maximumDrawDown = backtestModel.maximumDrawdown?.split(".")?: mutableListOf("${backtestModel.maximumDrawdown}")
+        val rewardRiskRatio = backtestModel.rewardRiskRatio?.split(".")?: mutableListOf("${backtestModel.rewardRiskRatio}")
+        val buyVsHold = backtestModel.buyvsHold?.split(".")?: mutableListOf("${backtestModel.buyvsHold}")
+        if(expectedShortfall.size > 1){
+            expectedShorFallTextView.setText("Expected Short Fall: ${expectedShortfall[0]}.${expectedShortfall[1].substring(0,4)}")
+        }else{
+            expectedShorFallTextView.setText("Expected Short Fall: ${expectedShortfall[0]}")
+        }
 
+        if(maximumDrawDown.size > 1){
+            maximumDrawDownTextView.setText("Maximum Drawdown: ${maximumDrawDown[0]}.${maximumDrawDown[1].substring(0,4)}")
+        }else{
+            maximumDrawDownTextView.setText("Maximum Drawdown: ${maximumDrawDown[0]}")
+        }
+        if(rewardRiskRatio.size > 1){
+            rewardRiskRatioTextView.setText("Reward Risk Ratio: ${rewardRiskRatio[0]}.${rewardRiskRatio[1].substring(0,4)}")
+        }else{
+            rewardRiskRatioTextView.setText("Reward Risk Ratio: ${rewardRiskRatio[0]}")
+        }
+        if(buyVsHold.size > 1){
+            strategyBuyvsHoldTextView.setText("Strategy vs Buy_and_hold: ${buyVsHold[0]}.${buyVsHold[1].substring(0,4)}")
+        }else{
+            strategyBuyvsHoldTextView.setText("Strategy vs Buy_and_hold: ${buyVsHold[0]}")
+        }
+
+
+       editButton.setOnClickListener {
+            dialog?.dismiss()
+            getStrategyFromStrategyId(strategyId = backtestModel.strategyID?:"test")
         }
 
         dialogBuilder.setView(dialogView)

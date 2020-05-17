@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
 
 class CreateStrategyPart2_2 : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
+    private var param1: Boolean? = null
     private var param2: String? = null
 
     private val LOG_TAG = CreateStrategyPart2_2::class.java.canonicalName
@@ -49,7 +49,7 @@ class CreateStrategyPart2_2 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getBoolean(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -63,7 +63,7 @@ class CreateStrategyPart2_2 : Fragment() {
         createStrategyFAB = view.findViewById(R.id.createStrategyFab)
 
         createStrategyFAB.setOnClickListener {
-            showDialog()
+            showDialog("Choose First Indicator")
         }
 
         viewManager = LinearLayoutManager(activity)
@@ -79,6 +79,8 @@ class CreateStrategyPart2_2 : Fragment() {
                 val secondIndicator = strategylist.get(position).secondIndicator?.name
                 if(secondIndicator!=null){
                     editIndicatorDialog(secondIndicator,1,position)
+                }else{
+                    editIndicatorDialog("Price Point",2,position)
                 }
             }
 
@@ -142,14 +144,15 @@ class CreateStrategyPart2_2 : Fragment() {
         }
 
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView)
+        if(param1 == true)initPage()
         return view
     }
 
 
     var showDialogCounter = 0
-    fun showDialog(){
+    fun showDialog(message:String){
         var indicatorListDialog: IndicatorListDialog? = null
-        indicatorListDialog =  IndicatorListDialog(object : IndicatorListDialogCallback {
+        indicatorListDialog =  IndicatorListDialog(message,object : IndicatorListDialogCallback {
             override fun indicatorName(name: String) {
                 showIndicatorPropertiesDialog(name)
                 indicatorListDialog?.dismiss()
@@ -163,7 +166,7 @@ class CreateStrategyPart2_2 : Fragment() {
     fun showComparisonOperatorDialog(position: Int){
         var dialog: AlertDialog? = null
         val dialogBuilder = AlertDialog.Builder(view?.context)
-        dialogBuilder.setTitle("Choose Indicator")
+        dialogBuilder.setTitle("Choose Comparison Operator")
             .setItems(R.array.comparison_operator_list
             ) { dialog, which ->
                 Log.d("LOG", operatorList[which])
@@ -177,7 +180,7 @@ class CreateStrategyPart2_2 : Fragment() {
 
     fun editIndicatorDialog(indicator:String,indicatorPosition:Int,position:Int){
         var dialog:ShowIndicatorPropertiesDialog? = null
-        dialog = if(indicatorPosition ==0){ ShowIndicatorPropertiesDialog(0,indicator,strategylist[position].firstIndicator.properties,object :ShowIndicatorPropertiesDialogCallback{
+        dialog = if(indicatorPosition ==0){  ShowIndicatorPropertiesDialog(0,indicator,strategylist[position].firstIndicator.properties,object :ShowIndicatorPropertiesDialogCallback{
             override fun getProperties(properties: MutableMap<Any?, Any?>) {
                 if(indicatorPosition ==0){
                     strategylist[position].firstIndicator = Indicator(indicator, properties)
@@ -196,6 +199,7 @@ class CreateStrategyPart2_2 : Fragment() {
         })
         }else {
             val secondIndicator = strategylist[position].secondIndicator?.properties
+            val secondValue = strategylist[position].secondValue
             if (secondIndicator != null) {
                 ShowIndicatorPropertiesDialog(1,indicator,secondIndicator ,
                     object : ShowIndicatorPropertiesDialogCallback {
@@ -213,6 +217,21 @@ class CreateStrategyPart2_2 : Fragment() {
 
                         override fun getPrice(price: Double) {
 
+                        }
+                    })
+            }else if(secondValue != null){
+                val map :MutableMap<Any?,Any?> = mutableMapOf()
+                map["Price Point"] = secondValue
+                ShowIndicatorPropertiesDialog(1,"Price Point",map,
+                    object : ShowIndicatorPropertiesDialogCallback {
+                        override fun getProperties(properties: MutableMap<Any?, Any?>) {
+                            dialog?.dismiss()
+                        }
+
+                        override fun getPrice(price: Double) {
+                            strategylist[position].secondValue = price
+                            viewAdapter.notifyDataSetChanged()
+                            dialog?.dismiss()
                         }
                     })
             }else{
@@ -238,7 +257,7 @@ class CreateStrategyPart2_2 : Fragment() {
                     showDialogCounter++
                     indicator1 = Indicator(indicator,properties)
                     dialog?.dismiss()
-                    showDialog()
+                    showDialog("Choose Second Indicator")
                 }else{
                     indicator2 = Indicator(indicator,properties)
                     strategylist.add(Strategy(firstIndicator = indicator1,secondIndicator = indicator2,comparisonOperator = "crossUp",logicalOperator = "and"))
@@ -268,6 +287,17 @@ class CreateStrategyPart2_2 : Fragment() {
 
         dialog.show(fragmentManager?.beginTransaction()!!,"")
     }
+
+    fun initPage(){
+        try {
+            strategylist.clear()
+            strategylist.addAll(MyStrategy.getMExitCondition())
+            viewAdapter.notifyDataSetChanged()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
     fun setPage(){
         try {
             MyStrategy.setMExitCondition(strategylist)
@@ -287,10 +317,10 @@ class CreateStrategyPart2_2 : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Boolean, param2: String) =
             CreateStrategyPart2_2().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putBoolean(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }

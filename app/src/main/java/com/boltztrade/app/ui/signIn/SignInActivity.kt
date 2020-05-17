@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.MainActivity
@@ -29,18 +30,23 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.*
+import java.util.*
 
 
 class SignInActivity : AppCompatActivity() {
 
     private val LOG_TAG = SignInActivity::class.java.canonicalName
     private val RC_SIGN_IN = 1
-    private lateinit var signInButton:SignInButton
+    private lateinit var signInButton:Button
+    private val c = Calendar.getInstance()!!
+    private val mYear = c.get(Calendar.YEAR)
+    private val mMonth = c.get(Calendar.MONTH)
+    private val mDay = c.get(Calendar.DAY_OF_MONTH)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         supportActionBar?.hide()
-        signInButton   = findViewById<SignInButton>(R.id.sign_in_button)
+        signInButton   = findViewById(R.id.sign_in_button)
         signInButton.visibility = View.GONE
         subscribeToTopic()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -49,9 +55,12 @@ class SignInActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        tryToDownloadCSV()
+       val instrumentFetchedOn =  BoltztradeSingleton.mSharedPreferences.getString("instrumentFetchedOn","")
+        if(!instrumentFetchedOn.equals("$mYear-$mMonth-$mDay")){
+            tryToDownloadCSV()
+        }
+
         checkIfUserAlreadySignedIn(mGoogleSignInClient)
-        signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener { signIn(mGoogleSignInClient) }
     }
 
@@ -127,9 +136,8 @@ class SignInActivity : AppCompatActivity() {
                 try {
                     BoltztradeSingleton.mDatabase.instrumentDao().nukeTable()
                     val r = BufferedReader(InputStreamReader(bis))
-                    val total = StringBuilder()
+//                    val total = StringBuilder()
                     var line: String?
-                    it.onNext(true)
                     Log.d(LOG_TAG,r.readLine())
                     while (r.readLine().also { line = it } != null) {
                         val values = line?.split(",")
@@ -141,16 +149,19 @@ class SignInActivity : AppCompatActivity() {
                                     values[9], values[10], values[11]
                                 )
                             )
+                        }else{
+                            Log.d("values","$line")
                         }
-                        total.append(line).append('\n')
+//                        total.append(line).append('\n')
                     }
+                    it.onNext(true)
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-
+                BoltztradeSingleton.mSharedPreferencesEditor.putString("instrumentFetchedOn","$mYear-$mMonth-$mDay").apply()
             },{
-                Log.d(LOG_TAG,"something went wrong while adding notification...")
+                Log.d(LOG_TAG,"something went wrong while adding instruments..")
                 it.printStackTrace()
             },{ Log.d(LOG_TAG,"onComplete")})
 
@@ -184,6 +195,34 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
+    }
+
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    // Shows the system bars by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
     fun getIPAddress(){
 
         val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager

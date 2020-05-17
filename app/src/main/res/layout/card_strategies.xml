@@ -1,85 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/strategy_card_view"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="90dp"
     android:clickable="true"
+    android:background="@drawable/strategy_card_border_background"
     android:elevation="1dp"
     android:gravity="center"
-    android:backgroundTint="@color/colorPrimary"
-    android:layout_margin="3dp"
+    android:layout_marginBottom="12dp"
+    android:layout_margin="4dp"
     card_view:cardCornerRadius="5dp"
     card_view:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/strategy_card_border_background"
+        android:backgroundTint="@color/cardForground"
+        card_view:layout_constraintTop_toTopOf="parent"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="1dp">
 
         <TextView
             android:id="@+id/strategy_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:clickable="true"
+            android:fontFamily="@font/opensans_semibold"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
             android:text="strategy name"
             android:textColor="@color/white"
+            android:textSize="20sp"
             android:textStyle="bold"
-            card_view:layout_constraintBottom_toTopOf="@+id/backtest"
+            card_view:layout_constraintBottom_toTopOf="@+id/divider3"
+            card_view:layout_constraintEnd_toStartOf="@+id/assesment"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/edit"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="#171616"
+            android:elevation="12dp"
+            android:fontFamily="@font/fredoka_one"
+            android:text="E"
+            android:src="@drawable/ic_edit"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toTopOf="@+id/divider3"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/assesment"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="#171616"
+            android:elevation="12dp"
+            android:fontFamily="@font/fredoka_one"
+            android:text="E"
+            android:src="@drawable/ic_assessment_black_24dp"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toTopOf="@+id/divider3"
+            card_view:layout_constraintEnd_toStartOf="@id/edit"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/backtest"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#171616"
+            android:elevation="12dp"
+            android:fontFamily="@font/fredoka_one"
+            android:text="Backtest"
+            android:textColor="@color/deep_saffron"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/divider3"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <Button
+            android:id="@+id/deploy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#171616"
+            android:elevation="12dp"
+            android:fontFamily="@font/fredoka_one"
+            android:text="Deploy"
+            android:textColor="@color/medium_spring_bud"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/divider3"
+            card_view:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/white"
+            card_view:layout_constraintVertical_bias="0.6"
+            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:elevation="12dp"
-            android:fontFamily="@font/montserrat_semibold"
-            android:foregroundTint="@color/chips"
-            android:text="Delete"
-            android:textColor="@color/indianRed"
-            android:textSize="9sp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@+id/backtest"
-            card_view:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/backtest"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:elevation="12dp"
-            android:fontFamily="@font/montserrat_semibold"
-            android:foregroundTint="@color/chips"
-            android:text="Backtest"
-            android:textColor="@color/deep_saffron"
-            android:textSize="9sp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/deploy"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:elevation="12dp"
-            android:fontFamily="@font/montserrat_semibold"
-            android:foregroundTint="@color/chips"
-            android:text="Deploy"
-            android:textColor="@color/medium_spring_bud"
-            android:textSize="9sp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/backtest" />
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/divider2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

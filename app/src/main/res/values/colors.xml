@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#313335</color>
-    <color name="colorPrimaryDark">#2b2b2b</color>
+
+    <color name="oxfordBlue">#040C12</color>
+
+    <color name="richBlack">#07090A</color>
+    <color name="davyGray">#58595C</color>
+    <color name="appRed">#F5100E</color>
+    <color name="appBrown">#592416</color>
+    <color name="x11Gray">#BEBDBE</color>
+    <color name="seagreen">#5AF4BE</color>
+    <color name="corn">#EFEA5A</color>
+    <color name="yellow">#F79D6D</color>
+    <color name="amber">#FD8610</color>
+    <color name="sandybrown">#F29E4C</color>
+    <color name="webGray">#7D7F81</color>
+    <color name="rust">#B23C10</color>
+    <color name="blackcoral">#4F5D75</color>
+<!--    <color name="colorPrimary">#1D2126</color>-->
+<!--    <color name="colorPrimaryDark">#181320</color>-->
+<!--    <color name="colorPrimaryDarkHeader">#E6181320</color>-->
+<!--    <color name="drawerBackground">#251E22</color>-->
+
+<!--    <color name="colorPrimary">#1D2126</color>-->
+<!--    <color name="colorPrimaryDark">#181320</color>-->
+
+
+<!--    <color name="colorPrimary">#1D2126</color>-->
+<!--    <color name="colorPrimaryDark">#040C12</color>-->
+
+
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+
+    <color name="colorPrimaryDarkHeader">#000000</color>
+    <color name="homeCardColor">#FFEBEE</color>
+    <color name="homeCardTextColor">#000</color>
+    <color name="actionButtonColor">#404040</color>
+    <color name="drawerBackground">#404040</color>
+    <color name="cardForground">#171616</color>
     <color name="profit">#5BA695</color>
     <color name="loss">#F5787C</color>
     <color name="colorAccent">#7FEFBD</color>
     <color name="colorBadges">#E1BEE7</color>
-    <color name="chips">#BF3c3f41</color>
+    <color name="chips">#4a4a4a</color>
     <color name="deep_saffron">#F6993E</color>
     <color name="riffle_green">#3B5432</color>
     <color name="dark_see_green">#B2FF59</color>
     <color name="medium_spring_bud">#64FFDA</color>
-    <color name="card">#BF3c3f41</color>
+    <color name="card">#2F4A5C</color>
     <color name="ming">#3F6A81</color>
     <color name="silver_achlice">#ADADAD</color>
     <color name="secondary">#EF9A9A</color>

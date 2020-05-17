@@ -5,7 +5,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
 
     android:padding="30dp"
-    android:background="@color/card"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <TextView
@@ -15,9 +15,8 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/opensans_regular"
         android:text="Set Properties Of Indicator"
-        android:textColor="@color/deep_saffron"
+        android:textColor="@color/black"
         android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,17 +27,16 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indicator_lable">
 
         <TextView
             android:id="@+id/property_one_key"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
             android:text="Period:"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/property_one_value"
@@ -50,39 +48,38 @@
             android:inputType="number"
             android:padding="10dp"
             android:text="14"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/property_two_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/property_one_container">
+        app:layout_constraintTop_toBottomOf="@+id/property_one_container">
 
         <TextView
             android:id="@+id/property_two_key"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
             android:text="Period:"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/property_two_value"
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/border_layout"
             android:ems="10"
             android:inputType="number"
             android:padding="10dp"
             android:text="14"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
 
 
     </LinearLayout>
@@ -90,15 +87,16 @@
 
     <Button
         android:id="@+id/done"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/chips"
+        android:background="@drawable/action_button_background"
         android:text="Done"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/indicator_lable"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/property_two_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,13 +9,13 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_watchlist"
-            android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="@string/menu_watchlist" />
-        <item
             android:id="@+id/nav_strategies"
             android:icon="@drawable/ic_grain_black_24dp"
             android:title="@string/menu_strategies" />
+        <item
+            android:id="@+id/nav_watchlist"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/menu_watchlist" />
         <item
             android:id="@+id/nav_articles"
             android:icon="@drawable/ic_description_black_24dp"

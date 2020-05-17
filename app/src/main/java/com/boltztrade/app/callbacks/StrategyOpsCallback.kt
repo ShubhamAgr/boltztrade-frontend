@@ -6,6 +6,7 @@ interface StrategyOpsCallback {
     fun backtest(position: Int)
     fun deploy(position: Int)
     fun delete(position: Int)
+    fun edit(position: Int)
     fun enter(position: Int)
     fun exit(position: Int)
     fun snooze(position: Int)

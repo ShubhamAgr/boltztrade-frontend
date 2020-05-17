@@ -5,7 +5,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
 
     android:padding="30dp"
-    android:background="@color/card"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/opensans_regular"
         android:text="Set Properties Of Indicator"
-        android:textColor="@color/deep_saffron"
+        android:textColor="@color/black"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
             android:text="Period:"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/property_one_value"
@@ -50,7 +50,7 @@
             android:inputType="number"
             android:padding="10dp"
             android:text="14"
-            android:textColor="@color/deep_saffron" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
 
@@ -62,7 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/chips"
+        android:background="@drawable/action_button_background"
         android:text="Done"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

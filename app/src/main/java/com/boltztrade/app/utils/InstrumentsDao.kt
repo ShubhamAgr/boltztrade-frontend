@@ -17,8 +17,11 @@ interface InstrumentsDao {
     @Query("DELETE FROM instrument")
     fun nukeTable()
 
-    @Query("SELECT * FROM instrument WHERE name LIKE '%' || :search  || '%'OR tradingsymbol LIKE '%' || :search  || '%'")
+    @Query("SELECT * FROM instrument WHERE tradingsymbol LIKE '%' || :search  || '%'")
     fun instrumentList(search: String): List<Instrument>
+
+    @Query("SELECT * FROM instrument WHERE instrument_token LIKE '%' || :search  || '%'")
+    fun searchInstrumentFromToken(search: String): List<Instrument>
 
     @Delete
     fun delete(sample: Instrument)

@@ -94,6 +94,10 @@ class HomeFragment : Fragment() {
                 //don't need to implement this for strategy Fragment
             }
 
+            override fun edit(position: Int) {
+                //don't need to implement this for strategy Fragment
+            }
+
             override fun enter(position: Int) {
                 //implement user entered to strategy
             }
@@ -141,21 +145,6 @@ class HomeFragment : Fragment() {
 //            viewAdapter.notifyDataSetChanged()
         },{
             Log.e("error","while calling get strategy list")
-            it.printStackTrace()
-        },{
-            Log.i(LOG_TAG,"Get All Strategies Call Completed..")
-        })
-    }
-    private fun getStrategyFromStrategyId(strategyId:String){
-        Log.d("strategy ID",strategyId)
-        val disp = BoltztradeRetrofit.getInstance().getStrategyFromId("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
-            SharedPrefKeys.boltztradeToken,"")!!}", ApiService.StrategyIdBody(strategyId)
-        )?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
-            Log.d(LOG_TAG, "strategy response$it")
-//            strategyList.add(it)
-//            viewAdapter.notifyDataSetChanged()
-        },{
-            Log.e("error","while calling get strategy with id")
             it.printStackTrace()
         },{
             Log.i(LOG_TAG,"Get All Strategies Call Completed..")

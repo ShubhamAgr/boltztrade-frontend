@@ -56,6 +56,9 @@ interface ApiService {
     @POST("/strategies/create")
     fun createStrategies(@Header("Authorization")authorization:String,@Body strategy:StrategyModel):Observable<StrategyModel>
 
+    @POST("/strategies/update")
+    fun updateStrategies(@Header("Authorization")authorization:String,@Body strategy:StrategyModel):Observable<StrategyModel>
+
     @POST("/strategies/addAuthor")
     fun addStrategyAuthor(@Header("Authorization")authorization:String,@Body addStrategyAuthor: Strategies.AddStrategyAuthor):Observable<StrategyModel>
 

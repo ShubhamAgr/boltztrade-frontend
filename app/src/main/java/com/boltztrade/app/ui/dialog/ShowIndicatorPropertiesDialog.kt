@@ -31,6 +31,14 @@ class ShowIndicatorPropertiesDialog(val indicatorCount:Int,val indicator: String
                     this.findViewById<TextView>(R.id.property_one_key).text = "Price Point"
                     this.findViewById<EditText>(R.id.property_one_value).setText(price.toString())
                 }
+                "MACD"->inflater.inflate(R.layout.three_properties_indicator_dialog,null).apply {
+                    this.findViewById<TextView>(R.id.property_one_key).text = "Fast Length"
+                    this.findViewById<TextView>(R.id.property_two_key).text = "Short Length"
+                    this.findViewById<TextView>(R.id.property_three_key).text = "Signal"
+                    this.findViewById<EditText>(R.id.property_one_value).setText(12.toString())
+                    this.findViewById<EditText>(R.id.property_two_value).setText(26.toString())
+                    this.findViewById<EditText>(R.id.property_three_value).setText(0.toString())
+                }
                 "Simple Moving Average(SMA)"->inflater.inflate(R.layout.single_period_param,null)
                 "Exponential Moving Average(EMA)"->inflater.inflate(R.layout.single_period_param,null)
                 "Average Directional Moving Index(ADX)"->inflater.inflate(R.layout.single_period_param,null)
@@ -105,24 +113,34 @@ class ShowIndicatorPropertiesDialog(val indicatorCount:Int,val indicator: String
             }
 
 
-            builder.setView(dialogView)
-
-            if(givenProps != null){
-                setIndicatorDialogValues(indicator,dialogView,givenProps)
-            }
-
-            val doneButton = dialogView.findViewById(R.id.done) as Button
-            doneButton.setOnClickListener {
-                if(indicator == "Price Point"){
-                    price = dialogView.findViewById<EditText>(R.id.property_one_value).text.toString().toDouble()
-                    Log.e("Price Point callback",price.toString())
-                    showIndicatorPropertiesDialogCallback.getPrice(price)
-                }else{
+            when(indicator){
+                "Close Price"->{
+                    builder.setView(dialogView)
                     showIndicatorPropertiesDialogCallback.getProperties(setIndicatorProperties(indicator,dialogView))
+                    builder.create()
                 }
+                else->{
+                    builder.setView(dialogView)
+                    if(givenProps != null){
+                        setIndicatorDialogValues(indicator,dialogView,givenProps)
+                    }
 
+                    val doneButton = dialogView.findViewById(R.id.done) as Button
+                    doneButton.setOnClickListener {
+                        if(indicator == "Price Point"){
+                            price = dialogView.findViewById<EditText>(R.id.property_one_value).text.toString().toDouble()
+                            Log.e("Price Point callback",price.toString())
+                            showIndicatorPropertiesDialogCallback.getPrice(price)
+                        }else{
+                            showIndicatorPropertiesDialogCallback.getProperties(setIndicatorProperties(indicator,dialogView))
+                        }
+
+                    }
+                    builder.create()
+                }
             }
-            builder.create()
+
+
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
@@ -132,6 +150,11 @@ fun setIndicatorProperties(indicator:String,dialogView:View):MutableMap<Any?,Any
     val propertiesMap :MutableMap<Any?,Any?> = mutableMapOf()
     when(indicator){
         "Close Price"->{
+        }
+        "MACD"->{
+            propertiesMap["shortBarCount"] = dialogView.findViewById<EditText>(R.id.property_one_value).text.toString().toInt()
+            propertiesMap["longBarCount"] = dialogView.findViewById<EditText>(R.id.property_two_value).text.toString().toInt()
+            propertiesMap["signalLine"] = dialogView.findViewById<EditText>(R.id.property_three_value).text.toString().toInt()
         }
         "Simple Moving Average(SMA)"->{
 
@@ -281,6 +304,18 @@ fun setIndicatorProperties(indicator:String,dialogView:View):MutableMap<Any?,Any
     fun setIndicatorDialogValues(indicator:String, dialogView: View, propertiesMap:MutableMap<Any?,Any?>){
         when(indicator){
             "Close Price"->{}
+            "MACD"->{
+                val value1 = propertiesMap["shortBarCount"].toString().split(".")[0]
+                val value2 = propertiesMap["longBarCount"].toString().split(".")[0]
+                val value3 = propertiesMap["signalLine"].toString().split(".")[0]
+                dialogView.findViewById<EditText>(R.id.property_one_value).setText(value1)
+                dialogView.findViewById<EditText>(R.id.property_two_value).setText(value2)
+                dialogView.findViewById<EditText>(R.id.property_three_value).setText(value3)
+            }
+            "Price Point"->{
+                val value = propertiesMap["Price Point"].toString()
+                dialogView.findViewById<EditText>(R.id.property_one_value).setText(value)
+            }
             "Simple Moving Average(SMA)"->{
                 val value = propertiesMap["barCount"].toString()
                 dialogView.findViewById<EditText>(R.id.property_one_value).setText(value)

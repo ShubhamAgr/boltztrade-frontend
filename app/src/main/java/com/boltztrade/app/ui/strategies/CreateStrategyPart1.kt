@@ -31,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
 
 class CreateStrategyPart1 : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
+    private var param1: Boolean? = null
     private var param2: String? = null
     private lateinit var instrumentSearchView: SearchView
     private lateinit var strategyNameEditText: EditText
@@ -49,7 +49,7 @@ class CreateStrategyPart1 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getBoolean(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -139,9 +139,30 @@ class CreateStrategyPart1 : Fragment() {
                 Log.d(LOG_TAG,"Not Focused")
             }
         }
+        if(param1 == true)initPage()
         return view
     }
 
+
+    fun initPage(){
+        val instrument = MyStrategy.getMSelectedInstrument()
+        if(instrument != null){selectedInstrument = instrument;instrumentSearchView.queryHint = selectedInstrument.name}
+        strategyNameEditText.setText(MyStrategy.getMAlgoName())
+        strategyQuantityEditText.setText(MyStrategy.getMQuantity().toString())
+        strategyPosition = if(MyStrategy.getMPosition().toLowerCase() == "buy"){
+            buyPositionButton.setBackgroundResource(R.drawable.buy_button_selected)
+            buyPositionButton.setTextColor(ContextCompat.getColor(activity?.applicationContext!!,R.color.deep_saffron))
+            sellPositionButton.setBackgroundResource(R.drawable.sell_button_unselected)
+            sellPositionButton.setTextColor(ContextCompat.getColor(activity?.applicationContext!!,R.color.white))
+            "Buy"
+        }else{
+            buyPositionButton.setBackgroundResource(R.drawable.buy_button_unselected)
+            sellPositionButton.setBackgroundResource(R.drawable.sell_button_selected)
+            buyPositionButton.setTextColor(ContextCompat.getColor(activity?.applicationContext!!,R.color.white))
+            sellPositionButton.setTextColor(ContextCompat.getColor(activity?.applicationContext!!,R.color.deep_saffron))
+            "Sell"
+        }
+    }
     fun setPage(){
         try{
             MyStrategy.setMSelectedInstrument(selectedInstrument)
@@ -175,7 +196,15 @@ class CreateStrategyPart1 : Fragment() {
             it.onNext(list)
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             instrumentSearchList.clear()
-            instrumentSearchList.addAll(it)
+            val priorityList :MutableList<Instrument> = mutableListOf()
+            val otherList:MutableList<Instrument> = mutableListOf()
+            for(i in it){
+                if(i.exchange?.toLowerCase() == "bse" || i.exchange?.toLowerCase() == "nse"){
+                    priorityList.add(i)
+                }else otherList.add(i)
+            }
+            priorityList.addAll(otherList)
+            instrumentSearchList.addAll(priorityList)
             viewAdapter.notifyDataSetChanged()
             Log.d("instrumentsearch list","$instrumentSearchList")
         },{
@@ -186,10 +215,10 @@ class CreateStrategyPart1 : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Boolean, param2: String) =
             CreateStrategyPart1().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putBoolean(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }

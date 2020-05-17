@@ -21,63 +21,42 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+
+        <EditText
+            android:id="@+id/user_full_name"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_margin="10dp"
-            android:clickable="true"
-            android:elevation="3dp"
+            android:textColorHint="@color/silver_achlice"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
-            app:cardCornerRadius="20dp">
+            android:background="@drawable/strategy_card_border_background"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:hint="Full Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/user_full_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:layout_margin="10dp"
-                    android:textColorHint="@color/silver_achlice"
-                    android:gravity="center"
-                    android:background="@color/card"
-                    android:inputType="text"
-                    android:textColor="@color/deep_saffron"
-                    android:hint="Full Name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
-            app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/strategy_card_border_background"
                 android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="Age"
                     android:gravity="left|center"
                     android:fontFamily="@font/montserrat_medium"
                     android:textSize="20sp"
+                    android:background="@drawable/strategy_card_border_background"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,33 +73,23 @@
                     app:layout_constraintStart_toEndOf="@+id/textView8"
                     app:layout_constraintTop_toTopOf="@+id/textView8" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
-            app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/strategy_card_border_background"
                 android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/trading_exp_label"
                     android:layout_width="200dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="Trading Experience"
                     android:gravity="left|center"
                     android:textSize="20sp"
+                    android:background="@drawable/strategy_card_border_background"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -138,32 +107,21 @@
                     app:layout_constraintStart_toEndOf="@+id/trading_exp_label"
                     app:layout_constraintTop_toTopOf="@+id/trading_exp_label" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
-            app:cardCornerRadius="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/strategy_card_border_background"
             android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/radio_group_label"
                 android:layout_width="150dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="Qualification"
                 android:gravity="left|center"
+                android:background="@drawable/strategy_card_border_background"
                 android:textSize="20sp"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
@@ -216,7 +174,6 @@
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -225,7 +182,6 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
             android:backgroundTint="@color/chips"
             android:foregroundTint="@color/chips"
             app:cardCornerRadius="20dp">
@@ -373,7 +329,7 @@
                     android:layout_margin="10dp"
                     android:textColorHint="@color/silver_achlice"
                     android:gravity="center"
-                    android:background="@color/card"
+                    android:background="@color/colorPrimary"
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"
@@ -432,7 +388,7 @@
                     android:layout_margin="10dp"
                     android:textColorHint="@color/silver_achlice"
                     android:gravity="center"
-                    android:background="@color/card"
+                    android:background="@color/colorPrimary"
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"
@@ -490,7 +446,7 @@
                     android:layout_margin="10dp"
                     android:textColorHint="@color/silver_achlice"
                     android:gravity="center"
-                    android:background="@color/card"
+                    android:background="@color/colorPrimary"
                     android:inputType="text"
                     android:textColor="@color/deep_saffron"
                     android:hint="Registration Number"

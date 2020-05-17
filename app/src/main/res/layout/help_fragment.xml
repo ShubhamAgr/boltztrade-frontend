@@ -7,31 +7,32 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".ui.help.HelpFragment">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="10dp"
         android:clickable="true"
-        android:elevation="3dp"
+        android:background="@drawable/strategy_card_border_background"
+        android:elevation="1dp"
         android:gravity="center"
-        android:background="@drawable/indicator_background"
-        android:backgroundTint="@color/chips"
-        android:foregroundTint="@color/chips"
-        app:cardCornerRadius="20dp">
+        android:layout_margin="10dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+
+            android:layout_margin="1dp">
 
             <TextView
                 android:id="@+id/contact_info_label"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="4dp"
-                android:fontFamily="@font/montserrat_medium"
+                android:fontFamily="@font/fredoka_one"
                 android:gravity="center"
                 android:text="Contact Information"
-                android:textColor="@color/white"
+                android:textColor="@color/seagreen"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/info1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
                 android:text="shubham@boltztrade.com"
-                android:textColor="@color/deep_saffron"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/info2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,12 +62,12 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
                 android:text="avinash@boltztrade.com"
-                android:textColor="@color/deep_saffron"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

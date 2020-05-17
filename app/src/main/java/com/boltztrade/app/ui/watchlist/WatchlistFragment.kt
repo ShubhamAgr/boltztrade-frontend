@@ -17,7 +17,6 @@ import com.boltztrade.app.BoltztradeSingleton
 import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.BoltztradeRetrofit
-import com.boltztrade.app.apis.KiteRetrofit
 import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
 import com.boltztrade.app.model.*
 import com.boltztrade.app.ui.strategies.InstrumentListAdapter
@@ -173,7 +172,15 @@ class WatchlistFragment : Fragment() {
             it.onNext(list)
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             instrumentSearchList.clear()
-            instrumentSearchList.addAll(it)
+            val priorityList :MutableList<Instrument> = mutableListOf()
+            val otherList:MutableList<Instrument> = mutableListOf()
+            for(i in it){
+                if(i.exchange?.toLowerCase() == "bse" || i.exchange?.toLowerCase() == "nse"){
+                    priorityList.add(i)
+                }else otherList.add(i)
+            }
+            priorityList.addAll(otherList)
+            instrumentSearchList.addAll(priorityList)
             viewAdapter2.notifyDataSetChanged()
             Log.d("instrumentsearch list","$instrumentSearchList")
         },{

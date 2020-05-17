@@ -20,6 +20,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_backtest_label">
+
+        <Button
+            android:id="@+id/five_year_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/card"
+            android:textColor="@color/white"
+            android:text="2Y" />
+
+        <Button
+            android:id="@+id/one_year_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/card"
+            android:layout_marginStart="2dp"
+            android:textColor="@color/white"
+            android:text="Y" />
+
+        <Button
+            android:id="@+id/six_month_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/card"
+            android:layout_marginStart="2dp"
+            android:textColor="@color/white"
+            android:text="6M" />
+
+        <Button
+            android:id="@+id/three_month_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/card"
+            android:layout_marginStart="2dp"
+            android:textColor="@color/white"
+            android:text="3M" />
+
+        <Button
+            android:id="@+id/one_month_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/card"
+            android:textColor="@color/white"
+            android:text="M" />
+
+        <Button
+            android:id="@+id/five_day_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/card"
+            android:textColor="@color/white"
+            android:text="5D" />
+
+        <Button
+            android:id="@+id/one_day_period"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/card"
+            android:textColor="@color/deep_saffron"
+            android:text="D" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/target_profit_edittext"
         android:layout_width="match_parent"
@@ -33,11 +106,10 @@
         android:hint="Target Profit %"
         android:inputType="numberDecimal"
         android:textColor="@color/white"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <EditText
         android:id="@+id/stop_loss_edittext"
@@ -47,13 +119,28 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@color/card"
-        android:textColor="@color/white"
+        android:ems="10"
         android:gravity="center"
         android:hint="Stop Loss %"
-        android:ems="10"
         android:inputType="numberDecimal"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/target_profit_edittext" />
+
+    <TextView
+        android:id="@+id/show_backtest_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Select Backtest period"
+        android:alpha="0.6"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
