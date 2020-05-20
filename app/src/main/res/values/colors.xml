@@ -12,7 +12,7 @@
     <color name="corn">#EFEA5A</color>
     <color name="yellow">#F79D6D</color>
     <color name="amber">#FD8610</color>
-    <color name="sandybrown">#F29E4C</color>
+    <color name="sandybrown">#E2C2FF</color>
     <color name="webGray">#7D7F81</color>
     <color name="rust">#B23C10</color>
     <color name="blackcoral">#4F5D75</color>
@@ -43,7 +43,7 @@
     <color name="colorAccent">#7FEFBD</color>
     <color name="colorBadges">#E1BEE7</color>
     <color name="chips">#4a4a4a</color>
-    <color name="deep_saffron">#F6993E</color>
+    <color name="deep_saffron">#E2C2FF</color>
     <color name="riffle_green">#3B5432</color>
     <color name="dark_see_green">#B2FF59</color>
     <color name="medium_spring_bud">#64FFDA</color>

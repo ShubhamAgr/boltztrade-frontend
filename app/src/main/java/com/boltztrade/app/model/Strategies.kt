@@ -5,6 +5,8 @@ object Strategies {
 
     data class StrategyOpsRequest(val strategyId: String,val username:String)
 
+    data class DeployOpsRequest(val strategyId: String,val username:String,val interval:String)
+
     data class BacktestOpsRequest(val strategyId: String,val username:String,val from:String,val to:String)
 
     data class BacktestModel(var _id: String?,var userId:String?,var strategyID: String?,var timestamp:Long?=null,var averageProfitableTrade:String?=null,

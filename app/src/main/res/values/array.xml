@@ -45,6 +45,14 @@
         <item>On Balance Volume Indicator</item>
     </string-array>
 
+    <string-array name="deploy_interval">
+        <item>minute</item>
+        <item>3minute</item>
+        <item>5minute</item>
+        <item>10minute</item>
+        <item>15minute</item>
+    </string-array>
+
     <string-array name="comparison_operator_list">
         <item>crossUp</item>
         <item>crossDown</item>

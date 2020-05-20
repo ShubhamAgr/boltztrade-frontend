@@ -22,12 +22,12 @@ import com.boltztrade.app.R
 import com.boltztrade.app.SharedPrefKeys
 import com.boltztrade.app.apis.ApiService
 import com.boltztrade.app.apis.BoltztradeRetrofit
-import com.boltztrade.app.callbacks.RecyclerviewSelectedPositionCallback
-import com.boltztrade.app.callbacks.StrategyCardTouchCallback
-import com.boltztrade.app.callbacks.StrategyOpsCallback
+import com.boltztrade.app.callbacks.*
 import com.boltztrade.app.model.Strategies
 import com.boltztrade.app.model.StrategyModel
 import com.boltztrade.app.model.Username
+import com.boltztrade.app.ui.dialog.DeployIntervalDialog
+import com.boltztrade.app.ui.dialog.IndicatorListDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.gson.Gson
 import io.reactivex.Observable
@@ -99,18 +99,29 @@ class StrategiesFragment : Fragment() {
             }
 
             override fun deploy(position: Int) {
-                val disp = BoltztradeRetrofit.getInstance().deploy("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
-                    SharedPrefKeys.boltztradeToken,"")!!}", Strategies.StrategyOpsRequest(strategyList[position]._id?:"",BoltztradeSingleton.mSharedPreferences.getString(
-                    SharedPrefKeys.boltztradeUser,"")!!)).
-                    subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    Toast.makeText(activity,it,Toast.LENGTH_LONG).show()
-                    Log.d(LOG_TAG,it.toString())
-                },{
-                    it.printStackTrace()
-                    Toast.makeText(activity,"Something Went wrong, Please try again",Toast.LENGTH_LONG).show()
-                },{
-                    Log.i(LOG_TAG,"Dep Completed..")
-                })
+                //show dialog... select interval.....
+                    var deployListDialog: DeployIntervalDialog? = null
+                    deployListDialog =  DeployIntervalDialog("Choose Deploy Candle Time Interval",object :DeployIntervalListDialogCallback{
+                        override fun interval(mInterval: String) {
+                            val disp = BoltztradeRetrofit.getInstance().deploy("Bearer ${BoltztradeSingleton.mSharedPreferences.getString(
+                                SharedPrefKeys.boltztradeToken,"")!!}", Strategies.DeployOpsRequest(strategyList[position]._id?:"",BoltztradeSingleton.mSharedPreferences.getString(
+                                SharedPrefKeys.boltztradeUser,"")!!,mInterval)).
+                            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                                Toast.makeText(activity,it,Toast.LENGTH_LONG).show()
+                                Log.d(LOG_TAG,it.toString())
+                            },{
+                                it.printStackTrace()
+                                Toast.makeText(activity,"Something Went wrong, Please try again",Toast.LENGTH_LONG).show()
+                            },{
+                                Log.i(LOG_TAG,"Dep Completed..")
+                            })
+                            deployListDialog?.dismiss()
+                        }
+
+                    })
+
+                    deployListDialog.show(fragmentManager?.beginTransaction()!!,"dialog")
+
             }
 
             override fun delete(position: Int) {

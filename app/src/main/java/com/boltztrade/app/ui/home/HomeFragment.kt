@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager : RecyclerView.LayoutManager
     private var strategyList: MutableList<StrategyModel> = mutableListOf()
-    private var deployedStrategyList: MutableList<DeployedStrategy> = mutableListOf()
 
     private lateinit var strategyCreatedValue:TextView
     private lateinit var strategyBacktestValue:TextView
@@ -52,8 +51,7 @@ class HomeFragment : Fragment() {
     private lateinit var totalProfitEarnedValue:TextView
     private lateinit var noStrategiesDeployedView:ConstraintLayout
     private lateinit var cloudImage:ImageView
-
-    data class DeployedStrategy(var strategyId: String,var strategyName:String,var deploymentId:String)
+    private val deployedStrategyList:MutableMap<String,DeployModel> = mutableMapOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -204,7 +202,7 @@ class HomeFragment : Fragment() {
                 for(deployment in it){
                     for(strategy in strategyList){
                         if(strategy._id == deployment.strategyId){
-                            deployedStrategyList.add(DeployedStrategy(strategy._id?:"", strategy.algoName,deployment._id?:""))
+                            deployedStrategyList[strategy.algoName] = deployment
                             viewAdapter.notifyDataSetChanged()
                         }
                     }
@@ -272,7 +270,7 @@ class HomeFragment : Fragment() {
 
     private fun getTradingDayTimeStampInUtc():Long{
         val calendar = Calendar.getInstance()
-        val today = calendar.getTime();
+        val today = calendar.getTime()
         val todayString =  SimpleDateFormat("yyyy-MM-dd").format(today)
         Log.d("Today Date",todayString)
         val offset = TimeZone.getDefault().rawOffset + TimeZone.getDefault().dstSavings
