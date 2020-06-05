@@ -75,6 +75,7 @@ class SignInActivity : AppCompatActivity() {
         mGoogleSignInClient.silentSignIn()
         val signInIntent = mGoogleSignInClient.getSignInIntent()
         startActivityForResult(signInIntent, RC_SIGN_IN)
+        finish()
     }
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -115,6 +116,7 @@ class SignInActivity : AppCompatActivity() {
                 BoltztradeSingleton.mSharedPreferencesEditor.putString(SharedPrefKeys.boltztradeToken,it.token).apply()
                 BoltztradeSingleton.mSharedPreferencesEditor.putString(SharedPrefKeys.boltztradeUser,it.username).apply()
                 startActivity(Intent(this,MainActivity::class.java))
+                finish()
 //                startActivity(Intent(this,NewArticleActivity::class.java))
             },{
                 signInButton.visibility = View.VISIBLE
@@ -158,7 +160,7 @@ class SignInActivity : AppCompatActivity() {
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 BoltztradeSingleton.mSharedPreferencesEditor.putString("instrumentFetchedOn","$mYear-$mMonth-$mDay").apply()
             },{
                 Log.d(LOG_TAG,"something went wrong while adding instruments..")

@@ -134,12 +134,12 @@ class HomeFragment : Fragment() {
                 SharedPrefKeys.boltztradeUser, "")!!)
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            getDeployedStrategy()
             Log.d(LOG_TAG,it.toString())
             strategyCreatedValue.text = it.size.toString()
             deployedStrategyList.clear()
             strategyList.clear()
             strategyList.addAll(it)
+            getDeployedStrategy()
 //            viewAdapter.notifyDataSetChanged()
         },{
             Log.e("error","while calling get strategy list")
@@ -207,6 +207,8 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
+                Log.e("strategyInDeployment","${deployedStrategyList.size}")
             }
             Log.d(LOG_TAG,it.toString())
         },{
@@ -241,7 +243,8 @@ class HomeFragment : Fragment() {
                 SharedPrefKeys.boltztradeUser, "")!!,getTradingDayTimeStampInUtc())
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            todaysProfitValue.setText(it.totalProfit.toString())
+            todaysProfitValue.setText("₹ ${it.totalProfit}")
+
             Log.d(LOG_TAG,it.toString())
         },{
             Log.e("error","while calling get todays profit")
@@ -258,7 +261,14 @@ class HomeFragment : Fragment() {
                 SharedPrefKeys.boltztradeUser, "")!!)
         ).
             subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            totalProfitEarnedValue.setText(it.totalProfit.toString())
+
+            if(it.totalProfit?.toString().contains(".")){
+                val profit = it.totalProfit.toString().split(".")
+                val secondPart = if(profit[1].length>0) profit[1].substring(0,2) else "00"
+                totalProfitEarnedValue.setText("₹ ${profit[0]}.$secondPart")
+            }else{
+                totalProfitEarnedValue.setText("₹ ${it.totalProfit}")
+            }
             Log.d(LOG_TAG,it.toString())
         },{
             Log.e("error","while calling get total profit")

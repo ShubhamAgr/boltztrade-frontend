@@ -25,13 +25,14 @@
         <EditText
             android:id="@+id/user_full_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:ems="10"
             android:fontFamily="@font/montserrat_medium"
             android:layout_margin="10dp"
             android:textColorHint="@color/silver_achlice"
             android:gravity="center"
             android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             android:inputType="text"
             android:textColor="@color/white"
             android:hint="Full Name"
@@ -43,20 +44,22 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:background="@drawable/strategy_card_border_background"
+                android:backgroundTint="@color/cardForground"
                 android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="10dp"
                     android:text="Age"
                     android:gravity="left|center"
                     android:fontFamily="@font/montserrat_medium"
                     android:textSize="20sp"
                     android:background="@drawable/strategy_card_border_background"
+                    android:backgroundTint="@color/cardForground"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -77,19 +80,21 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:background="@drawable/strategy_card_border_background"
+                android:backgroundTint="@color/cardForground"
                 android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/trading_exp_label"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="10dp"
                     android:text="Trading Experience"
                     android:gravity="left|center"
                     android:textSize="20sp"
                     android:background="@drawable/strategy_card_border_background"
+                    android:backgroundTint="@color/cardForground"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -110,18 +115,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
             android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/radio_group_label"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="10dp"
                 android:text="Qualification"
                 android:gravity="left|center"
                 android:background="@drawable/strategy_card_border_background"
+                android:backgroundTint="@color/cardForground"
                 android:textSize="20sp"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
@@ -182,8 +189,8 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             app:cardCornerRadius="20dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -228,9 +235,8 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -286,9 +292,8 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -345,9 +350,8 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -403,9 +407,8 @@
             android:clickable="true"
             android:elevation="3dp"
             android:gravity="center"
-            android:background="@drawable/indicator_background"
-            android:backgroundTint="@color/chips"
-            android:foregroundTint="@color/chips"
+            android:background="@drawable/strategy_card_border_background"
+            android:backgroundTint="@color/cardForground"
             app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -461,12 +464,12 @@
     <Button
         android:id="@+id/update_profile"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/chips"
-        android:elevation="48dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/action_button_background"
+        android:fontFamily="@font/opensans_semibold"
         android:text="Edit Profile"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

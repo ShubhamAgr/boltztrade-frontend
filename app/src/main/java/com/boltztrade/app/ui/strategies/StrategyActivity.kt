@@ -12,16 +12,10 @@ import com.boltztrade.app.apis.BoltztradeRetrofit
 import com.boltztrade.app.model.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.time.Instant
 import java.util.*
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import java.text.DateFormat
 import android.app.Activity
 import android.content.Intent
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe

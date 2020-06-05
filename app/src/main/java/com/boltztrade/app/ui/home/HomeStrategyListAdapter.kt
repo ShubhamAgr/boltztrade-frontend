@@ -16,7 +16,6 @@ class HomeStrategyListAdapter(val deployList:MutableMap<String, DeployModel>, va
     RecyclerView
     .Adapter<HomeStrategyListAdapter.ViewHolder>() {
 
-    val keysList = deployList.keys.toMutableList()
     private val LOG_TAG = HomeStrategyListAdapter::class.java.canonicalName
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardview = LayoutInflater.from(parent?.context)
@@ -26,10 +25,11 @@ class HomeStrategyListAdapter(val deployList:MutableMap<String, DeployModel>, va
     }
 
     override fun getItemCount(): Int {
-        return keysList.size
+        return deployList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val keysList = deployList.keys.toMutableList()
         holder.strategyNameTextView.text = keysList[position].capitalize()
         val deployModelForKey = deployList[keysList[position]]
         val candleInterval = when(deployModelForKey?.interval){
@@ -41,24 +41,25 @@ class HomeStrategyListAdapter(val deployList:MutableMap<String, DeployModel>, va
             else->{"1min"}
         }
         holder.intervalTextView.text = "Candle:$candleInterval"
-        val deployedOrderSize = deployModelForKey?.deployOrder?.size ?: 0
+        Log.d("deploy Order","${deployModelForKey?.deployOrder}")
+        val deployedOrderSize = deployModelForKey?.deployOrder?.size//deployOrder?.size ?: 0
 
         when(deployedOrderSize){
             0->{
-                holder.enteredTextView.setText("Entered:pending")
-                holder.exitedTextView.setText("Exited:pending")
+                holder.enteredTextView.setText("Entered: pending")
+                holder.exitedTextView.setText("Exited: pending")
             }
             1->{
-                holder.enteredTextView.setText("Entered:₹${deployModelForKey?.deployOrder?.get(0)?.netPrice}")
-                holder.exitedTextView.setText("Exited:pending")
+                holder.enteredTextView.setText("Entered: ₹${deployModelForKey?.deployOrder?.get(0)?.netPrice}")
+                holder.exitedTextView.setText("Exited: pending")
             }
             2->{
-                holder.enteredTextView.setText("Entered:₹${deployModelForKey?.deployOrder?.get(0)?.netPrice}")
-                holder.exitedTextView.setText("Exited:₹${deployModelForKey?.deployOrder?.get(1)?.netPrice}")
+                holder.enteredTextView.setText("Entered: ₹${deployModelForKey?.deployOrder?.get(0)?.netPrice}")
+                holder.exitedTextView.setText("Exited: ₹${deployModelForKey?.deployOrder?.get(1)?.netPrice}")
             }
             else->{
                 holder.enteredTextView.setText("Entered:₹${deployModelForKey?.deployOrder?.get(0)?.netPrice}")
-                holder.exitedTextView.setText("Exited:₹${deployModelForKey?.deployOrder?.get(1)?.netPrice}")
+                holder.exitedTextView.setText("Exited: ₹${deployModelForKey?.deployOrder?.get(1)?.netPrice}")
             }
         }
 
